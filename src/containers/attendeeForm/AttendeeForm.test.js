@@ -1,15 +1,25 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import AttendeeForm from './AttendeeForm';
 import configureStore from '../../configureStore';
 
 const store = configureStore();
 
 describe('AttendeeForm', () => {
-  it('renders AttendeeForm container without crashing', () => {
-    const component = shallow(<Provider store={store}><AttendeeForm /></Provider>);
+  it('renders AttendeeForm with all input fields and a submit button', () => {
+    render(
+      <Provider store={store}>
+        <Router>
+          <AttendeeForm />
+        </Router>
+      </Provider>,
+    );
 
-    expect(component).toMatchSnapshot();
+    expect(screen.getByLabelText(/first name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/last name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/event date/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
   });
 });

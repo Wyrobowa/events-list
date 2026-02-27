@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Components
 import Header from './components/header/Header';
@@ -12,8 +11,10 @@ const App = () => (
   <Router>
     <>
       <Header />
-      <Route exact path="/" component={AttendiesList} />
-      <Route path="/add" component={AttendeeForm} />
+      <Routes>
+        <Route path="/" element={<AttendiesList />} />
+        <Route path="/add" element={<AttendeeForm />} />
+      </Routes>
     </>
   </Router>
 );

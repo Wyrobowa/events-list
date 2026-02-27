@@ -1,11 +1,18 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import App from './App';
+import configureStore from './configureStore';
+
+const store = configureStore();
 
 describe('App', () => {
-  it('renders App without crashing', () => {
-    const component = shallow(<App />);
+  it('renders App with Header', () => {
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+    );
 
-    expect(component).toMatchSnapshot();
+    expect(screen.getByRole('navigation')).toBeInTheDocument();
   });
 });

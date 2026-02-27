@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 
 import attendee from './attendeeFormReducer';
 import attendies from './attendiesListReducer';

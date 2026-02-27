@@ -1,11 +1,23 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import InputFormField from './InputFormField';
 
-describe('Header', () => {
-  it('renders InputFormField component without crashing', () => {
-    const component = shallow(<InputFormField id="name" label="Name" onChange={() => {}} />);
+describe('InputFormField', () => {
+  it('renders InputFormField and calls onChange', () => {
+    const handleChange = vi.fn();
+    render(
+      <InputFormField
+        id="test-input"
+        label="Test Label"
+        value="initial"
+        onChange={handleChange}
+      />,
+    );
 
-    expect(component).toMatchSnapshot();
+    const input = screen.getByLabelText(/test label/i);
+    expect(input).toBeInTheDocument();
+    expect(input.value).toBe('initial');
+
+    fireEvent.change(input, { target: { value: 'new value' } });
+    expect(handleChange).toHaveBeenCalledTimes(1);
   });
 });
