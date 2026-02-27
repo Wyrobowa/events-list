@@ -30,6 +30,8 @@ describe('AttendeeList', () => {
         email: 'john@example.com',
         eventDate: '2026-05-20',
         ticketType: 'standard',
+        eventTitle: 'Test Event',
+        eventDescription: 'Test Description',
         slug: 'attendee-1',
       },
     ];
@@ -58,6 +60,8 @@ describe('AttendeeList', () => {
         email: 'jane@example.com',
         eventDate: '2026-05-20',
         ticketType: 'standard',
+        eventTitle: 'Test Event 2',
+        eventDescription: 'Test Description 2',
         slug: 'attendee-2',
       },
     ];
@@ -94,8 +98,8 @@ describe('AttendeeList', () => {
 
   it('filters attendees based on search query', () => {
     const attendees: Attendee[] = [
-      { firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com', eventDate: '2026-05-20', ticketType: 'standard', slug: 'alice' },
-      { firstName: 'Bob', lastName: 'Jones', email: 'bob@example.com', eventDate: '2026-05-21', ticketType: 'standard', slug: 'bob' },
+      { firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com', eventDate: '2026-05-20', ticketType: 'standard', eventTitle: 'A', eventDescription: 'A desc', slug: 'alice' },
+      { firstName: 'Bob', lastName: 'Jones', email: 'bob@example.com', eventDate: '2026-05-21', ticketType: 'standard', eventTitle: 'B', eventDescription: 'B desc', slug: 'bob' },
     ];
 
     store.dispatch(addAttendee(attendees[0]));
@@ -135,8 +139,8 @@ describe('AttendeeList', () => {
     const freshStore = configureStore();
     // Use clearAllAttendees to be sure
     freshStore.dispatch(clearAllAttendees());
-    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'A', email: 'z@e.com', eventDate: '2026-01-01', ticketType: 'standard', slug: 'z' }));
-    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'B', email: 'a@e.com', eventDate: '2026-01-02', ticketType: 'standard', slug: 'a' }));
+    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'A', email: 'z@e.com', eventDate: '2026-01-01', ticketType: 'standard', eventTitle: 'Z', eventDescription: 'Z', slug: 'z' }));
+    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'B', email: 'a@e.com', eventDate: '2026-01-02', ticketType: 'standard', eventTitle: 'A', eventDescription: 'A', slug: 'a' }));
 
     render(
       <Provider store={freshStore}>

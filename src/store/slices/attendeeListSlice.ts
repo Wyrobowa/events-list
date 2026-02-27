@@ -11,6 +11,8 @@ const initialState: AttendeeListState = {
 const normalizeAttendee = (attendee: Attendee): Attendee => ({
   ...attendee,
   ticketType: attendee.ticketType || 'standard',
+  eventTitle: attendee.eventTitle || '',
+  eventDescription: attendee.eventDescription || '',
 });
 
 export const fetchAttendees = createAsyncThunk(

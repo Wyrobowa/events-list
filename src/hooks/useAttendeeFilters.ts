@@ -21,6 +21,8 @@ export const useAttendeeFilters = (attendees: Attendee[]) => {
           attendee.firstName.toLowerCase().includes(searchLower) ||
           attendee.lastName.toLowerCase().includes(searchLower) ||
           attendee.email.toLowerCase().includes(searchLower) ||
+          (attendee.eventTitle || '').toLowerCase().includes(searchLower) ||
+          (attendee.eventDescription || '').toLowerCase().includes(searchLower) ||
           (attendee.ticketType || '').toLowerCase().includes(searchLower)
         );
       })

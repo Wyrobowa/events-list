@@ -10,6 +10,8 @@ const initialState: AttendeeFormState = {
     email: '',
     eventDate: '',
     ticketType: 'standard',
+    eventTitle: '',
+    eventDescription: '',
   },
   status: 'initial',
   msg: '',

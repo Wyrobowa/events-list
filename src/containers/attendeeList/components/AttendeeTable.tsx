@@ -59,6 +59,11 @@ const AttendeeTable = memo(({
               Last Name {sortConfig?.key === 'lastName' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
             </Box>
           </TableHead>
+          <TableHead style={{ cursor: 'pointer' }} onClick={() => onSort('eventTitle')}>
+            <Box display="flex" alignItems="center" gap={1}>
+              Event Title {sortConfig?.key === 'eventTitle' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+            </Box>
+          </TableHead>
           <TableHead style={{ cursor: 'pointer' }} onClick={() => onSort('email')}>
             <Box display="flex" alignItems="center" gap={1}>
               Email {sortConfig?.key === 'email' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
@@ -93,6 +98,7 @@ const AttendeeTable = memo(({
             <TableCell>{index + 1}</TableCell>
             <TableCell>{attendee.firstName}</TableCell>
             <TableCell>{attendee.lastName}</TableCell>
+            <TableCell>{attendee.eventTitle}</TableCell>
             <TableCell>{attendee.email}</TableCell>
             <TableCell>{dayjs(attendee.eventDate).format('YYYY-MM-DD')}</TableCell>
             <TableCell>

@@ -4,6 +4,8 @@ export interface Attendee {
   email: string;
   eventDate: string;
   ticketType: 'standard' | 'vip' | 'speaker';
+  eventTitle: string;
+  eventDescription: string;
   slug?: string;
 }
 

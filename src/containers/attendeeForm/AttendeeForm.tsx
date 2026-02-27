@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import { Box, Button, Select } from 'tharaday';
+import {Box, Button, Select, Textarea} from 'tharaday';
 
 import {
   editAttendeeForm,
@@ -25,6 +25,8 @@ const schema = yup.object().shape({
   email: yup.string().email('Please enter a valid email!').required('Email field can\'t be empty!'),
   eventDate: yup.date().required('Event Date field can\'t be empty!'),
   ticketType: yup.string().oneOf(['standard', 'vip', 'speaker']).required('Ticket Type field can\'t be empty!'),
+  eventTitle: yup.string().required('Event Title field can\'t be empty!'),
+  eventDescription: yup.string().required('Event Description field can\'t be empty!'),
 });
 
 interface AttendeeFormProps {
@@ -58,7 +60,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
     }
   }, [dispatch, slug, attendeeList]);
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = target;
     dispatch(editAttendeeForm({ field: name, value }));
   };
@@ -136,6 +138,23 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
             onChange={handleInputChange}
             value={attendeeForm.eventDate}
           />
+          <InputFormField
+            label="Event Title"
+            id="eventTitle"
+            onChange={handleInputChange}
+            value={attendeeForm.eventTitle}
+          />
+
+          <Box mb={4}>
+            <Textarea
+                label="Event Description"
+                id="eventDescription"
+                onChange={handleInputChange}
+                value={attendeeForm.eventDescription}
+                fullWidth
+            />
+          </Box>
+
           <Box mb={4}>
             <Select
               label="Ticket Type"

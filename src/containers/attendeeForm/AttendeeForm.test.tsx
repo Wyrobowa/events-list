@@ -18,6 +18,8 @@ describe('AttendeeForm', () => {
     expect(screen.getByLabelText(/last name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/event date/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/event title/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/event description/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /add/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
   });

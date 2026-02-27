@@ -24,7 +24,7 @@ const InputFormField = ({
       value={value}
       type={type}
       onChange={onChange}
-      style={{ width: '100%' }}
+      fullWidth
     />
   </div>
 );
