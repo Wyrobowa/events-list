@@ -144,6 +144,7 @@ const AttendeeList = () => {
           selectedSlugs={selectedSlugs}
           onSelect={handleSelectAttendee}
           onSelectAll={handleSelectAllAttendees}
+          onRowClick={handleEdit}
         />
       )}
       {status !== 'danger' && attendeeList.length > 0 && filteredAndSortedAttendees.length === 0 && (

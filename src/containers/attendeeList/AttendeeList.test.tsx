@@ -47,22 +47,19 @@ describe('AttendeeList', () => {
     );
 
     expect(screen.getByText('John')).toBeInTheDocument();
-    expect(screen.getByText('Actions')).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /edit/i })[0]).toBeInTheDocument();
-    expect(screen.getAllByRole('button', { name: /delete/i })[0]).toBeInTheDocument();
   });
 
-  it('shows confirmation modal when delete button is clicked', () => {
+  it('opens edit modal when row is clicked', () => {
     const attendees: Attendee[] = [
       {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        email: 'jane@example.com',
+        firstName: 'Click',
+        lastName: 'Me',
+        email: 'click@example.com',
         eventDate: '2026-05-20',
         ticketType: 'standard',
-        eventTitle: 'Test Event 2',
-        eventDescription: 'Test Description 2',
-        slug: 'attendee-2',
+        eventTitle: 'Click Event',
+        eventDescription: 'Click Description',
+        slug: 'click-me',
       },
     ];
 
@@ -76,12 +73,12 @@ describe('AttendeeList', () => {
       </Provider>,
     );
 
-    const deleteButton = screen.getAllByRole('button', { name: /delete/i }).find(btn => btn.textContent?.trim() === 'Delete');
-    if (!deleteButton) throw new Error('Delete button not found');
-    fireEvent.click(deleteButton);
+    const row = screen.getByText('Click').closest('tr');
+    if (!row) throw new Error('Row not found');
+    fireEvent.click(row);
 
-    expect(screen.getByText(/Confirm Deletion/i)).toBeInTheDocument();
-    expect(screen.getByText(/Are you sure you want to delete this attendee\?/i)).toBeInTheDocument();
+    expect(screen.getByText(/Edit Attendee/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Click')).toBeInTheDocument();
   });
 
   it('renders "Add Attendee" button', () => {

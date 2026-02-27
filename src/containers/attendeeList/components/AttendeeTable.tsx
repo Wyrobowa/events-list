@@ -24,6 +24,7 @@ interface AttendeeTableProps {
   selectedSlugs: string[];
   onSelect: (slug: string) => void;
   onSelectAll: () => void;
+  onRowClick: (slug: string) => void;
 }
 
 const AttendeeTable = memo(({
@@ -35,6 +36,7 @@ const AttendeeTable = memo(({
   selectedSlugs,
   onSelect,
   onSelectAll,
+  onRowClick,
 }: AttendeeTableProps) => {
   const allSelected = attendees.length > 0 && selectedSlugs.length === attendees.length;
 
@@ -79,7 +81,6 @@ const AttendeeTable = memo(({
               Ticket Type {sortConfig?.key === 'ticketType' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
             </Box>
           </TableHead>
-          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -88,8 +89,10 @@ const AttendeeTable = memo(({
           return (
           <TableRow
             key={attendee.slug}
+            style={{ cursor: 'pointer' }}
+            onClick={() => attendee.slug && onRowClick(attendee.slug)}
           >
-            <TableCell>
+            <TableCell onClick={(e) => e.stopPropagation()}>
               <Checkbox
                 checked={attendee.slug ? selectedSlugs.includes(attendee.slug) : false}
                 onChange={() => attendee.slug && onSelect(attendee.slug)}
@@ -113,22 +116,6 @@ const AttendeeTable = memo(({
               >
                 {ticketType.charAt(0).toUpperCase() + ticketType.slice(1)}
               </Badge>
-            </TableCell>
-            <TableCell>
-              <Box display="flex" gap={2}>
-                <Button size="sm" intent="success" onClick={() => attendee.slug && onEdit(attendee.slug)}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <EditIcon size={14} />
-                    Edit
-                  </Box>
-                </Button>
-                <Button size="sm" intent="danger" onClick={() => attendee.slug && onDelete(attendee.slug)}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <TrashIcon size={14} />
-                    Delete
-                  </Box>
-                </Button>
-              </Box>
             </TableCell>
           </TableRow>
           );
