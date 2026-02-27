@@ -23,6 +23,11 @@ const attendeeForm = (state = initialState, action: any): AttendeeFormState => {
           [action.field]: action.value,
         },
       };
+    case attendeeFormActions.SET_ATTENDEE_FORM:
+      return {
+        ...state,
+        attendeeForm: action.payload,
+      };
     case attendeeFormActions.CLEAR_ATTENDEE_FORM:
       return initialState;
     case attendeeFormActions.SEND_ATTENDEE_FORM_SUCCESSFUL:

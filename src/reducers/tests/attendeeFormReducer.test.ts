@@ -88,4 +88,23 @@ describe('attendeeFormReducer', () => {
       errors: ['Test error 1', 'Test error 2'],
     })).toEqual(changedState);
   });
+
+  it('should handle SET_ATTENDEE_FORM action', () => {
+    const attendee = {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      eventDate: '2026-05-20',
+      slug: 'john-doe',
+    };
+    const changedState = {
+      ...initialState,
+      attendeeForm: attendee,
+    };
+
+    expect(reducer(initialState, {
+      type: actions.SET_ATTENDEE_FORM,
+      payload: attendee,
+    })).toEqual(changedState);
+  });
 });

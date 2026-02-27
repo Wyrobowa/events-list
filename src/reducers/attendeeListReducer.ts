@@ -14,6 +14,24 @@ const attendeeListReducer = (state = initialState, action: any): AttendeeListSta
       return {
         ...state,
         attendeeList: action.payload,
+        status: 'initial',
+      };
+    case actions.DELETE_ATTENDEE:
+      return {
+        ...state,
+        attendeeList: state.attendeeList.filter((attendee) => attendee.slug !== action.slug),
+      };
+    case actions.UPDATE_ATTENDEE:
+      return {
+        ...state,
+        attendeeList: state.attendeeList.map((attendee) => (
+          attendee.slug === action.payload.slug ? action.payload : attendee
+        )),
+      };
+    case actions.ADD_ATTENDEE:
+      return {
+        ...state,
+        attendeeList: [...state.attendeeList, action.payload],
       };
     case actions.GET_ATTENDEE_LIST_UNSUCCESSFUL:
       return {

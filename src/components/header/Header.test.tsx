@@ -11,6 +11,5 @@ describe('Header', () => {
     );
 
     expect(screen.getByRole('button', { name: /attendees list/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /add attendee/i })).toBeInTheDocument();
   });
 });

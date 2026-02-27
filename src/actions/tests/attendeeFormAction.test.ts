@@ -45,4 +45,19 @@ describe('attendeeFormActions', () => {
     };
     expect(actions.formValidationErrors(['error'])).toEqual(expectedAction);
   });
+
+  it('should create an action to setAttendeeForm', () => {
+    const attendee = {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      eventDate: '2026-05-20',
+      slug: 'john-doe',
+    };
+    const expectedAction = {
+      type: actions.SET_ATTENDEE_FORM,
+      payload: attendee,
+    };
+    expect(actions.setAttendeeForm(attendee)).toEqual(expectedAction);
+  });
 });

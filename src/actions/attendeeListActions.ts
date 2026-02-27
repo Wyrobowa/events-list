@@ -3,6 +3,9 @@ import { AppDispatch } from '../configureStore';
 
 export const GET_ATTENDEE_LIST_SUCCESSFUL = 'GET_ATTENDEE_LIST_SUCCESSFUL';
 export const GET_ATTENDEE_LIST_UNSUCCESSFUL = 'GET_ATTENDEE_LIST_UNSUCCESSFUL';
+export const DELETE_ATTENDEE = 'DELETE_ATTENDEE';
+export const UPDATE_ATTENDEE = 'UPDATE_ATTENDEE';
+export const ADD_ATTENDEE = 'ADD_ATTENDEE';
 
 export const getAttendeeListSuccessful = (payload: Attendee[]) => ({
   type: GET_ATTENDEE_LIST_SUCCESSFUL,
@@ -11,6 +14,21 @@ export const getAttendeeListSuccessful = (payload: Attendee[]) => ({
 
 export const getAttendeeListUnsuccessful = () => ({
   type: GET_ATTENDEE_LIST_UNSUCCESSFUL,
+});
+
+export const deleteAttendee = (slug: string) => ({
+  type: DELETE_ATTENDEE,
+  slug,
+});
+
+export const updateAttendee = (attendee: Attendee) => ({
+  type: UPDATE_ATTENDEE,
+  payload: attendee,
+});
+
+export const addAttendee = (attendee: Attendee) => ({
+  type: ADD_ATTENDEE,
+  payload: attendee,
 });
 
 export const requestAttendeeList = () => (dispatch: AppDispatch) => {

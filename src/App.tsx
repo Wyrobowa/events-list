@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/header/Header';
 
 // Containers
-import AttendeeForm from './containers/attendeeForm/AttendeeForm';
 import AttendeeList from './containers/attendeeList/AttendeeList';
 
 const App = () => (
@@ -13,7 +12,6 @@ const App = () => (
       <Header />
       <Routes>
         <Route path="/" element={<AttendeeList />} />
-        <Route path="/add" element={<AttendeeForm />} />
       </Routes>
     </>
   </Router>

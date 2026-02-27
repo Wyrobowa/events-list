@@ -51,4 +51,50 @@ describe('attendeeListReducer', () => {
       type: actions.GET_ATTENDEE_LIST_UNSUCCESSFUL,
     })).toEqual(changedState);
   });
+
+  it('should handle DELETE_ATTENDEE action', () => {
+    const stateWithAttendee = {
+      ...initialState,
+      attendeeList: [{ slug: 'test-slug', firstName: 'Test' }],
+    };
+    const expectedState = {
+      ...initialState,
+      attendeeList: [],
+    };
+
+    expect(reducer(stateWithAttendee, {
+      type: actions.DELETE_ATTENDEE,
+      slug: 'test-slug',
+    })).toEqual(expectedState);
+  });
+
+  it('should handle UPDATE_ATTENDEE action', () => {
+    const stateWithAttendee = {
+      ...initialState,
+      attendeeList: [{ slug: 'test-slug', firstName: 'Test' }],
+    };
+    const updatedAttendee = { slug: 'test-slug', firstName: 'Updated' };
+    const expectedState = {
+      ...initialState,
+      attendeeList: [updatedAttendee],
+    };
+
+    expect(reducer(stateWithAttendee, {
+      type: actions.UPDATE_ATTENDEE,
+      payload: updatedAttendee,
+    })).toEqual(expectedState);
+  });
+
+  it('should handle ADD_ATTENDEE action', () => {
+    const attendee = { slug: 'new-attendee', firstName: 'New' };
+    const expectedState = {
+      ...initialState,
+      attendeeList: [attendee],
+    };
+
+    expect(reducer(initialState, {
+      type: actions.ADD_ATTENDEE,
+      payload: attendee,
+    })).toEqual(expectedState);
+  });
 });

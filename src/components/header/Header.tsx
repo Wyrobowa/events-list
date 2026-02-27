@@ -7,7 +7,6 @@ const Header = () => {
 
   const navItems = [
     { id: '/', label: 'Attendees list', href: '/' },
-    { id: '/add', label: 'Add attendee', href: '/add' },
   ];
 
   return (
