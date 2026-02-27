@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import { Box, Text, Button, Modal } from 'tharaday';
+import { Box, Button } from 'tharaday';
 
 import {
   editAttendeeForm,
@@ -16,6 +16,8 @@ import Alert from '../../components/alert/Alert';
 import InputFormField from '../../components/inputFormField/InputFormField';
 import { RootState, Attendee } from '../../types';
 import { AppDispatch } from '../../configureStore';
+import { PlusIcon, SaveIcon, TrashIcon } from '../../components/icons/Icons';
+import DeleteConfirmationModal from '../../components/deleteConfirmationModal/DeleteConfirmationModal';
 
 const schema = yup.object().shape({
   firstName: yup.string().required('First Name field can\'t be empty!'),
@@ -144,36 +146,12 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
               <Box display="flex" alignItems="center" gap={1}>
                 {slug ? (
                   <>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-                      />
-                    </svg>
+                    <SaveIcon size={16} />
                     Save
                   </>
                 ) : (
                   <>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
+                    <PlusIcon size={16} />
                     Add
                   </>
                 )}
@@ -197,21 +175,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
                 fullWidth
               >
                 <Box display="flex" alignItems="center" gap={1}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
+                  <TrashIcon size={16} />
                   Delete
                 </Box>
               </Button>
@@ -220,39 +184,11 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
         </form>
       </div>
 
-      <Modal
+      <DeleteConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={cancelDelete}
-        size="sm"
-        title="Confirm Deletion"
-      >
-        <Box padding={6}>
-          <Text align="center">Are you sure you want to delete this attendee?</Text>
-          <Box display="flex" gap={4} justifyContent="center">
-            <Button onClick={confirmDelete} intent="danger">
-              <Box display="flex" alignItems="center" gap={1}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
-                Delete
-              </Box>
-            </Button>
-            <Button onClick={cancelDelete} intent="neutral" variant="outline">Cancel</Button>
-          </Box>
-        </Box>
-      </Modal>
+        onConfirm={confirmDelete}
+      />
     </Box>
   );
 };

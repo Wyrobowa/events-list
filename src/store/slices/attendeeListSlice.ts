@@ -35,6 +35,9 @@ const attendeeListSlice = createSlice({
     deleteAttendee: (state, action: PayloadAction<string>) => {
       state.attendeeList = state.attendeeList.filter(a => a.slug !== action.payload);
     },
+    clearAllAttendees: (state) => {
+      state.attendeeList = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,5 +56,5 @@ const attendeeListSlice = createSlice({
   },
 });
 
-export const { addAttendee, updateAttendee, deleteAttendee } = attendeeListSlice.actions;
+export const { addAttendee, updateAttendee, deleteAttendee, clearAllAttendees } = attendeeListSlice.actions;
 export default attendeeListSlice.reducer;

@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Header as DSHeader } from 'tharaday';
 import { logout, login } from '../../store/slices/authSlice';

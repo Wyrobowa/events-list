@@ -3,6 +3,7 @@ import reducer, {
   addAttendee,
   updateAttendee,
   deleteAttendee,
+  clearAllAttendees,
 } from '../attendeeListSlice';
 
 const initialState = {
@@ -59,6 +60,18 @@ describe('attendeeListSlice', () => {
       attendeeList: [attendee],
     };
     const actual = reducer(state, deleteAttendee('john-doe'));
+    expect(actual.attendeeList).toHaveLength(0);
+  });
+
+  it('should handle clearAllAttendees', () => {
+    const state = {
+      ...initialState,
+      attendeeList: [
+        { firstName: 'John', lastName: 'Doe', email: 'j@d.com', eventDate: '2026-01-01', slug: '1' },
+        { firstName: 'Jane', lastName: 'Doe', email: 'ja@d.com', eventDate: '2026-01-02', slug: '2' },
+      ],
+    };
+    const actual = reducer(state, clearAllAttendees());
     expect(actual.attendeeList).toHaveLength(0);
   });
 });
