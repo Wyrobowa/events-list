@@ -1,6 +1,7 @@
+import { RootState, AttendeeFormState } from '../types';
 import * as attendeeFormActions from '../actions/attendeeFormActions';
 
-const initialState = {
+const initialState: AttendeeFormState = {
   attendeeForm: {
     firstName: '',
     lastName: '',
@@ -12,7 +13,7 @@ const initialState = {
   formValidationErrors: [],
 };
 
-const attendeeForm = (state = initialState, action) => {
+const attendeeForm = (state = initialState, action: any): AttendeeFormState => {
   switch (action.type) {
     case attendeeFormActions.EDIT_ATTENDEE_FORM:
       return {
@@ -56,9 +57,9 @@ const attendeeForm = (state = initialState, action) => {
   }
 };
 
-export const getAttendeeForm = (state) => state.attendee.attendeeForm;
-export const getStatus = (state) => state.attendee.status;
-export const getMessage = (state) => state.attendee.msg;
-export const getFormValidationErrors = (state) => state.attendee.formValidationErrors;
+export const getAttendeeForm = (state: RootState) => state.attendee.attendeeForm;
+export const getStatus = (state: RootState) => state.attendee.status;
+export const getMessage = (state: RootState) => state.attendee.msg;
+export const getFormValidationErrors = (state: RootState) => state.attendee.formValidationErrors;
 
 export default attendeeForm;

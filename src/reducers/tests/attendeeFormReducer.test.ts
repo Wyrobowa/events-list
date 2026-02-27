@@ -1,7 +1,7 @@
 import reducer from '../attendeeFormReducer';
 import * as actions from '../../actions/attendeeFormActions';
 
-const initialState = {
+const initialState: any = {
   attendeeForm: {
     firstName: '',
     lastName: '',

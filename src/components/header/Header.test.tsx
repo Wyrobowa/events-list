@@ -10,7 +10,7 @@ describe('Header', () => {
       </Router>,
     );
 
-    expect(screen.getByRole('link', { name: /attendies list/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /attendees list/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /add attendee/i })).toBeInTheDocument();
   });
 });

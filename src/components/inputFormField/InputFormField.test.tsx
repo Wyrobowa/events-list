@@ -13,7 +13,7 @@ describe('InputFormField', () => {
       />,
     );
 
-    const input = screen.getByLabelText(/test label/i);
+    const input = screen.getByLabelText(/test label/i) as HTMLInputElement;
     expect(input).toBeInTheDocument();
     expect(input.value).toBe('initial');
 

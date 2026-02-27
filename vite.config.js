@@ -5,20 +5,22 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.js$/,
+    loader: 'tsx',
+    include: /src\/.*\.tsx?$/,
     exclude: [],
   },
   optimizeDeps: {
     esbuildOptions: {
       loader: {
         '.js': 'jsx',
+        '.ts': 'ts',
+        '.tsx': 'tsx',
       },
     },
   },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.js',
+    setupFiles: './src/setupTests.ts',
   },
 });

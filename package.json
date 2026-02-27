@@ -7,7 +7,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "npm run lint:js",
-    "lint:js": "echo '=> linting js' && eslint src --ext .js",
+    "lint:js": "echo '=> linting js' && eslint src --ext .js,.jsx,.ts,.tsx",
+    "type-check": "tsc --noEmit",
     "test": "vitest"
   },
   "dependencies": {
@@ -25,12 +26,18 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^25.3.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
     "@vitejs/plugin-react": "^5.1.4",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.3.0",
     "jsdom": "^28.1.0",
+    "typescript": "^5.9.3",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
   },

@@ -1,21 +1,21 @@
-import reducer from '../attendiesListReducer';
-import * as actions from '../../actions/attendiesListActions';
+import reducer from '../attendeeListReducer';
+import * as actions from '../../actions/attendeeListActions';
 
-const initialState = {
-  attendiesList: [],
+const initialState: any = {
+  attendeeList: [],
   status: 'initial',
   msg: '',
 };
 
-describe('attendiesListReducer', () => {
+describe('attendeeListReducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle GET_ATTENDIES_LIST_SUCCESSFUL action', () => {
+  it('should handle GET_ATTENDEE_LIST_SUCCESSFUL action', () => {
     const changedState = {
       ...initialState,
-      attendiesList: [
+      attendeeList: [
         {
           firstName: 'Test First Name',
           lastName: 'Test Last Name',
@@ -27,7 +27,7 @@ describe('attendiesListReducer', () => {
     };
 
     expect(reducer(initialState, {
-      type: actions.GET_ATTENDIES_LIST_SUCCESSFUL,
+      type: actions.GET_ATTENDEE_LIST_SUCCESSFUL,
       payload: [
         {
           firstName: 'Test First Name',
@@ -40,15 +40,15 @@ describe('attendiesListReducer', () => {
     })).toEqual(changedState);
   });
 
-  it('should handle GET_ATTENDIES_LIST_UNSUCCESSFUL action', () => {
+  it('should handle GET_ATTENDEE_LIST_UNSUCCESSFUL action', () => {
     const changedState = {
       ...initialState,
-      msg: 'Something went wrong! List of attendies coudn\'t be loaded!',
+      msg: 'Something went wrong! List of attendees couldn\'t be loaded!',
       status: 'danger',
     };
 
     expect(reducer(initialState, {
-      type: actions.GET_ATTENDIES_LIST_UNSUCCESSFUL,
+      type: actions.GET_ATTENDEE_LIST_UNSUCCESSFUL,
     })).toEqual(changedState);
   });
 });

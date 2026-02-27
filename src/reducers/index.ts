@@ -1,11 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import attendee from './attendeeFormReducer';
-import attendies from './attendiesListReducer';
+import attendeeList from './attendeeListReducer';
 
 const AppReducers = combineReducers({
   attendee,
-  attendies,
+  attendeeList,
 });
 
 export default AppReducers;

@@ -4,8 +4,10 @@ describe('attendeeFormActions', () => {
   it('should create an action to editAttendeeForm', () => {
     const expectedAction = {
       type: actions.EDIT_ATTENDEE_FORM,
+      field: 'firstName',
+      value: 'John',
     };
-    expect(actions.editAttendeeForm()).toEqual(expectedAction);
+    expect(actions.editAttendeeForm('firstName', 'John')).toEqual(expectedAction);
   });
 
   it('should create an action to clearAttendeeForm', () => {
@@ -39,7 +41,8 @@ describe('attendeeFormActions', () => {
   it('should create an action to formValidationErrors', () => {
     const expectedAction = {
       type: actions.FORM_VALIDATION_ERRORS,
+      errors: ['error'],
     };
-    expect(actions.formValidationErrors()).toEqual(expectedAction);
+    expect(actions.formValidationErrors(['error'])).toEqual(expectedAction);
   });
 });

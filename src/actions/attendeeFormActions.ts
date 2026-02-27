@@ -1,3 +1,6 @@
+import { Attendee } from '../types';
+import { AppDispatch } from '../configureStore';
+
 export const SEND_ATTENDEE_FORM_SUCCESSFUL = 'SEND_ATTENDEE_FORM_SUCCESSFUL';
 export const SEND_ATTENDEE_FORM_UNSUCCESSFUL = 'SEND_ATTENDEE_FORM_UNSUCCESSFUL';
 export const EDIT_ATTENDEE_FORM = 'EDIT_ATTENDEE_FORM';
@@ -21,12 +24,12 @@ export const resetStatus = () => ({
   type: RESET_STATUS,
 });
 
-export const formValidationErrors = (errors) => ({
+export const formValidationErrors = (errors: string[]) => ({
   type: FORM_VALIDATION_ERRORS,
   errors,
 });
 
-export const sendAttendeeForm = (schema, attendeeForm, ref) => async (dispatch) => {
+export const sendAttendeeForm = (schema: any, attendeeForm: Attendee, ref: React.RefObject<HTMLButtonElement | null>) => async (dispatch: AppDispatch) => {
   try {
     await schema.validate(attendeeForm, { abortEarly: false });
 
@@ -50,16 +53,16 @@ export const sendAttendeeForm = (schema, attendeeForm, ref) => async (dispatch) 
     } catch (error) {
       dispatch(sendAttendeeFormUnsuccessful());
     }
-  } catch (error) {
-    const errors = error.inner.map((item) => (item.message));
+  } catch (error: any) {
+    const errors = error.inner.map((item: any) => (item.message));
 
     dispatch(formValidationErrors(errors));
   } finally {
-    ref.current.removeAttribute('disabled');
+    ref.current?.removeAttribute('disabled');
   }
 };
 
-export const editAttendeeForm = (field, value) => ({
+export const editAttendeeForm = (field: string, value: string) => ({
   type: EDIT_ATTENDEE_FORM,
   field,
   value,
