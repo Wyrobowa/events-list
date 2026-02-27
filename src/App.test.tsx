@@ -7,6 +7,7 @@ const store = configureStore();
 
 describe('App', () => {
   it('renders App with Header', () => {
+    window.history.pushState({}, 'Test page', '/events-list/');
     render(
       <Provider store={store}>
         <App />

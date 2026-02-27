@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/events-list/',
+  server: {
+    port: 5174,
+  },
   esbuild: {
     loader: 'tsx',
     include: /src\/.*\.tsx?$/,

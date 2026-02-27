@@ -7,7 +7,7 @@ import Header from './components/header/Header';
 import AttendeeList from './containers/attendeeList/AttendeeList';
 
 const App = () => (
-  <Router>
+  <Router basename="/events-list">
     <>
       <Header />
       <Routes>

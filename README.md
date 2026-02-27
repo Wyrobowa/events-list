@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode using Vite.<br />
-Open [http://localhost:5173](http://localhost:5173) (default Vite port) to view it in the browser.
+Open [http://localhost:5174/events-list/](http://localhost:5174/events-list/) to view it in the browser.
 
 The page will reload if you make edits.
 
