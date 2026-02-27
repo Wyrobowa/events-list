@@ -8,6 +8,11 @@ const initialState: AttendeeListState = {
   msg: '',
 };
 
+const normalizeAttendee = (attendee: Attendee): Attendee => ({
+  ...attendee,
+  ticketType: attendee.ticketType || 'standard',
+});
+
 export const fetchAttendees = createAsyncThunk(
   'attendeeList/fetchAttendees',
   async (_, { rejectWithValue }) => {
@@ -24,16 +29,19 @@ const attendeeListSlice = createSlice({
   initialState,
   reducers: {
     addAttendee: (state, action: PayloadAction<Attendee>) => {
-      state.attendeeList.push(action.payload);
+      state.attendeeList.push(normalizeAttendee(action.payload));
     },
     updateAttendee: (state, action: PayloadAction<Attendee>) => {
       const index = state.attendeeList.findIndex(a => a.slug === action.payload.slug);
       if (index !== -1) {
-        state.attendeeList[index] = action.payload;
+        state.attendeeList[index] = normalizeAttendee(action.payload);
       }
     },
     deleteAttendee: (state, action: PayloadAction<string>) => {
       state.attendeeList = state.attendeeList.filter(a => a.slug !== action.payload);
+    },
+    deleteMultipleAttendees: (state, action: PayloadAction<string[]>) => {
+      state.attendeeList = state.attendeeList.filter(a => !action.payload.includes(a.slug || ''));
     },
     clearAllAttendees: (state) => {
       state.attendeeList = [];
@@ -46,7 +54,7 @@ const attendeeListSlice = createSlice({
         state.msg = '';
       })
       .addCase(fetchAttendees.fulfilled, (state, action) => {
-        state.attendeeList = action.payload;
+        state.attendeeList = action.payload.map(normalizeAttendee);
         state.status = 'initial';
       })
       .addCase(fetchAttendees.rejected, (state, action) => {
@@ -56,5 +64,5 @@ const attendeeListSlice = createSlice({
   },
 });
 
-export const { addAttendee, updateAttendee, deleteAttendee, clearAllAttendees } = attendeeListSlice.actions;
+export const { addAttendee, updateAttendee, deleteAttendee, deleteMultipleAttendees, clearAllAttendees } = attendeeListSlice.actions;
 export default attendeeListSlice.reducer;

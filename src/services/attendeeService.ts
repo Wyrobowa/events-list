@@ -14,6 +14,7 @@ export const attendeeService = {
       lastName: post.title.split(' ')[1] || 'Lastname',
       email: `user${post.id}@example.com`,
       eventDate: '2026-05-20',
+      ticketType: 'standard',
       slug: `attendee-${post.id}`,
     }));
   },

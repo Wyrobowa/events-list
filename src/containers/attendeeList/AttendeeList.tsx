@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Text,
@@ -8,26 +8,24 @@ import {
   Input,
 } from 'tharaday';
 
-import { fetchAttendees, deleteAttendee, clearAllAttendees } from '../../store/slices/attendeeListSlice';
+import { fetchAttendees } from '../../store/slices/attendeeListSlice';
 import Alert from '../../components/alert/Alert';
 import { RootState } from '../../types';
 import { AppDispatch } from '../../configureStore';
 import AttendeeForm from '../attendeeForm/AttendeeForm';
-import { PlusIcon, TrashIcon } from '../../components/icons/Icons';
+import { PlusIcon, TrashIcon, DownloadIcon } from '../../components/icons/Icons';
 import DeleteConfirmationModal from '../../components/deleteConfirmationModal/DeleteConfirmationModal';
 import { useAttendeeFilters } from '../../hooks/useAttendeeFilters';
 import AttendeeTable from './components/AttendeeTable';
+import { useAttendeeModals } from './hooks/useAttendeeModals';
+import { exportAttendeesToCSV } from '../../utils/csvExport';
 
 const AttendeeList = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { status, msg, attendeeList } = useSelector((state: RootState) => state.attendeeList);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isClearAllModalOpen, setIsClearAllModalOpen] = useState(false);
-  const [editingSlug, setEditingSlug] = useState<string | undefined>(undefined);
-  const [slugToDelete, setSlugToDelete] = useState<string | undefined>(undefined);
+  const [selectedSlugs, setSelectedSlugs] = useState<string[]>([]);
 
   const {
     searchQuery,
@@ -37,55 +35,54 @@ const AttendeeList = () => {
     filteredAndSortedAttendees,
   } = useAttendeeFilters(attendeeList);
 
+  const {
+    isModalOpen,
+    isDeleteModalOpen,
+    isClearAllModalOpen,
+    isBulkDeleteModalOpen,
+    editingSlug,
+    handlers,
+  } = useAttendeeModals({
+    selectedSlugs,
+    setSelectedSlugs,
+  });
+
+  const {
+    handleAdd,
+    handleEdit,
+    handleCloseModal,
+    handleDeleteClick,
+    confirmDelete,
+    cancelDelete,
+    handleClearAll,
+    confirmClearAll,
+    cancelClearAll,
+    handleBulkDelete,
+    confirmBulkDelete,
+    cancelBulkDelete,
+  } = handlers;
+
   useEffect(() => {
     dispatch(fetchAttendees());
   }, [dispatch]);
 
-  const handleDeleteClick = (slug: string) => {
-    setSlugToDelete(slug);
-    setIsDeleteModalOpen(true);
-  };
+  const handleSelectAttendee = useCallback((slug: string) => {
+    setSelectedSlugs((prev) =>
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+    );
+  }, []);
 
-  const confirmDelete = () => {
-    if (slugToDelete) {
-      dispatch(deleteAttendee(slugToDelete));
-      setIsDeleteModalOpen(false);
-      setSlugToDelete(undefined);
+  const handleSelectAllAttendees = useCallback(() => {
+    if (selectedSlugs.length === filteredAndSortedAttendees.length) {
+      setSelectedSlugs([]);
+    } else {
+      setSelectedSlugs(filteredAndSortedAttendees.map((a) => a.slug || ''));
     }
-  };
+  }, [selectedSlugs.length, filteredAndSortedAttendees]);
 
-  const cancelDelete = () => {
-    setIsDeleteModalOpen(false);
-    setSlugToDelete(undefined);
-  };
-
-  const handleClearAll = () => {
-    setIsClearAllModalOpen(true);
-  };
-
-  const confirmClearAll = () => {
-    dispatch(clearAllAttendees());
-    setIsClearAllModalOpen(false);
-  };
-
-  const cancelClearAll = () => {
-    setIsClearAllModalOpen(false);
-  };
-
-  const handleEdit = (slug: string) => {
-    setEditingSlug(slug);
-    setIsModalOpen(true);
-  };
-
-  const handleAdd = () => {
-    setEditingSlug(undefined);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setEditingSlug(undefined);
-  };
+  const handleExportCSV = useCallback(() => {
+    exportAttendeesToCSV(filteredAndSortedAttendees);
+  }, [filteredAndSortedAttendees]);
 
   return (
     <Box padding={6}>
@@ -96,7 +93,23 @@ const AttendeeList = () => {
             <Button onClick={handleClearAll} intent="danger" variant="outline">
               <Box display="flex" alignItems="center" gap={1}>
                 <TrashIcon size={16} />
-                Clear All
+                Delete All
+              </Box>
+            </Button>
+          )}
+          {selectedSlugs.length > 0 && (
+            <Button onClick={handleBulkDelete} intent="danger" variant="solid">
+              <Box display="flex" alignItems="center" gap={1}>
+                <TrashIcon size={16} />
+                Delete Selected ({selectedSlugs.length})
+              </Box>
+            </Button>
+          )}
+          {filteredAndSortedAttendees.length > 0 && (
+            <Button onClick={handleExportCSV} variant="outline" intent="info">
+              <Box display="flex" alignItems="center" gap={1}>
+                <DownloadIcon size={16} />
+                Export CSV
               </Box>
             </Button>
           )}
@@ -128,6 +141,9 @@ const AttendeeList = () => {
           onSort={handleSort}
           onEdit={handleEdit}
           onDelete={handleDeleteClick}
+          selectedSlugs={selectedSlugs}
+          onSelect={handleSelectAttendee}
+          onSelectAll={handleSelectAllAttendees}
         />
       )}
       {status !== 'danger' && attendeeList.length > 0 && filteredAndSortedAttendees.length === 0 && (
@@ -163,6 +179,15 @@ const AttendeeList = () => {
         title="Confirm Clear All"
         message="Are you sure you want to remove all attendees? This action cannot be undone."
         confirmText="Delete All"
+      />
+
+      <DeleteConfirmationModal
+        isOpen={isBulkDeleteModalOpen}
+        onClose={cancelBulkDelete}
+        onConfirm={confirmBulkDelete}
+        title="Confirm Bulk Delete"
+        message={`Are you sure you want to remove ${selectedSlugs.length} selected attendees? This action cannot be undone.`}
+        confirmText="Delete Selected"
       />
     </Box>
   );

@@ -3,6 +3,7 @@ export interface Attendee {
   lastName: string;
   email: string;
   eventDate: string;
+  ticketType: 'standard' | 'vip' | 'speaker';
   slug?: string;
 }
 

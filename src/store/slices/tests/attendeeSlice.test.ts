@@ -5,7 +5,7 @@ import reducer, {
   clearAttendeeForm,
   resetStatus,
 } from '../attendeeSlice';
-import { AttendeeFormState } from '../../../types';
+import { AttendeeFormState, Attendee } from '../../../types';
 
 const initialState: AttendeeFormState = {
   attendeeForm: {
@@ -13,6 +13,7 @@ const initialState: AttendeeFormState = {
     lastName: '',
     email: '',
     eventDate: '',
+    ticketType: 'standard',
   },
   status: 'initial',
   msg: '',
@@ -30,11 +31,12 @@ describe('attendeeSlice', () => {
   });
 
   it('should handle setAttendeeForm', () => {
-    const attendee = {
+    const attendee: Attendee = {
       firstName: 'John',
       lastName: 'Doe',
       email: 'john@doe.com',
       eventDate: '2026-01-01',
+      ticketType: 'standard',
       slug: 'john-doe',
     };
     const actual = reducer(initialState, setAttendeeForm(attendee));
@@ -44,7 +46,7 @@ describe('attendeeSlice', () => {
   it('should handle clearAttendeeForm', () => {
     const state = {
       ...initialState,
-      attendeeForm: { firstName: 'John', lastName: 'Doe', email: '', eventDate: '' },
+      attendeeForm: { firstName: 'John', lastName: 'Doe', email: '', eventDate: '', ticketType: 'standard' as const },
     };
     const actual = reducer(state, clearAttendeeForm());
     expect(actual.attendeeForm).toEqual(initialState.attendeeForm);

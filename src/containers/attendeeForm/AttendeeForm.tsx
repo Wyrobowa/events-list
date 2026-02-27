@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import { Box, Button } from 'tharaday';
+import { Box, Button, Select } from 'tharaday';
 
 import {
   editAttendeeForm,
@@ -24,6 +24,7 @@ const schema = yup.object().shape({
   lastName: yup.string().required('Last Name field can\'t be empty!'),
   email: yup.string().email('Please enter a valid email!').required('Email field can\'t be empty!'),
   eventDate: yup.date().required('Event Date field can\'t be empty!'),
+  ticketType: yup.string().oneOf(['standard', 'vip', 'speaker']).required('Ticket Type field can\'t be empty!'),
 });
 
 interface AttendeeFormProps {
@@ -57,7 +58,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
     }
   }, [dispatch, slug, attendeeList]);
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = target;
     dispatch(editAttendeeForm({ field: name, value }));
   };
@@ -135,6 +136,20 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
             onChange={handleInputChange}
             value={attendeeForm.eventDate}
           />
+          <Box mb={4}>
+            <Select
+              label="Ticket Type"
+              name="ticketType"
+              value={attendeeForm.ticketType}
+              onChange={handleInputChange}
+              options={[
+                { value: 'standard', label: 'Standard' },
+                { value: 'vip', label: 'VIP' },
+                { value: 'speaker', label: 'Speaker' },
+              ]}
+              fullWidth
+            />
+          </Box>
           <Box display="flex" gap={2}>
             <Button
               type="submit"

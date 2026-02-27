@@ -20,7 +20,7 @@
     "react-dom": "^19.2.4",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.13.1",
-    "tharaday": "^0.3.1",
+    "tharaday": "^0.4.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {

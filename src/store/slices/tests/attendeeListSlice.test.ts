@@ -5,6 +5,7 @@ import reducer, {
   deleteAttendee,
   clearAllAttendees,
 } from '../attendeeListSlice';
+import { Attendee } from '../../../types';
 
 const initialState = {
   attendeeList: [],
@@ -18,11 +19,12 @@ describe('attendeeListSlice', () => {
   });
 
   it('should handle addAttendee', () => {
-    const attendee = {
+    const attendee: Attendee = {
       firstName: 'John',
       lastName: 'Doe',
       email: 'john@doe.com',
       eventDate: '2026-01-01',
+      ticketType: 'standard',
       slug: 'john-doe',
     };
     const actual = reducer(initialState, addAttendee(attendee));
@@ -31,11 +33,12 @@ describe('attendeeListSlice', () => {
   });
 
   it('should handle updateAttendee', () => {
-    const attendee = {
+    const attendee: Attendee = {
       firstName: 'John',
       lastName: 'Doe',
       email: 'john@doe.com',
       eventDate: '2026-01-01',
+      ticketType: 'standard',
       slug: 'john-doe',
     };
     const state = {
@@ -48,11 +51,12 @@ describe('attendeeListSlice', () => {
   });
 
   it('should handle deleteAttendee', () => {
-    const attendee = {
+    const attendee: Attendee = {
       firstName: 'John',
       lastName: 'Doe',
       email: 'john@doe.com',
       eventDate: '2026-01-01',
+      ticketType: 'standard',
       slug: 'john-doe',
     };
     const state = {
@@ -67,8 +71,8 @@ describe('attendeeListSlice', () => {
     const state = {
       ...initialState,
       attendeeList: [
-        { firstName: 'John', lastName: 'Doe', email: 'j@d.com', eventDate: '2026-01-01', slug: '1' },
-        { firstName: 'Jane', lastName: 'Doe', email: 'ja@d.com', eventDate: '2026-01-02', slug: '2' },
+        { firstName: 'John', lastName: 'Doe', email: 'j@d.com', eventDate: '2026-01-01', ticketType: 'standard' as const, slug: '1' },
+        { firstName: 'Jane', lastName: 'Doe', email: 'ja@d.com', eventDate: '2026-01-02', ticketType: 'standard' as const, slug: '2' },
       ],
     };
     const actual = reducer(state, clearAllAttendees());

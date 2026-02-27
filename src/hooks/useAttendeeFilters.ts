@@ -20,7 +20,8 @@ export const useAttendeeFilters = (attendees: Attendee[]) => {
         return (
           attendee.firstName.toLowerCase().includes(searchLower) ||
           attendee.lastName.toLowerCase().includes(searchLower) ||
-          attendee.email.toLowerCase().includes(searchLower)
+          attendee.email.toLowerCase().includes(searchLower) ||
+          (attendee.ticketType || '').toLowerCase().includes(searchLower)
         );
       })
       .sort((a, b) => {

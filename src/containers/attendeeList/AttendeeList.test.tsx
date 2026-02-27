@@ -5,6 +5,7 @@ import { vi, beforeEach } from 'vitest';
 import AttendeeList from './AttendeeList';
 import configureStore from '../../configureStore';
 import { addAttendee, clearAllAttendees } from '../../store/slices/attendeeListSlice';
+import { Attendee } from '../../types';
 
 const store = configureStore();
 
@@ -22,12 +23,13 @@ describe('AttendeeList', () => {
   });
 
   it('renders table with attendees and "Actions" column', () => {
-    const attendees = [
+    const attendees: Attendee[] = [
       {
         firstName: 'John',
         lastName: 'Doe',
         email: 'john@example.com',
         eventDate: '2026-05-20',
+        ticketType: 'standard',
         slug: 'attendee-1',
       },
     ];
@@ -44,17 +46,18 @@ describe('AttendeeList', () => {
 
     expect(screen.getByText('John')).toBeInTheDocument();
     expect(screen.getByText('Actions')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /edit/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /edit/i })[0]).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /delete/i })[0]).toBeInTheDocument();
   });
 
   it('shows confirmation modal when delete button is clicked', () => {
-    const attendees = [
+    const attendees: Attendee[] = [
       {
         firstName: 'Jane',
         lastName: 'Doe',
         email: 'jane@example.com',
         eventDate: '2026-05-20',
+        ticketType: 'standard',
         slug: 'attendee-2',
       },
     ];
@@ -69,7 +72,8 @@ describe('AttendeeList', () => {
       </Provider>,
     );
 
-    const deleteButton = screen.getAllByRole('button', { name: /delete/i })[0];
+    const deleteButton = screen.getAllByRole('button', { name: /delete/i }).find(btn => btn.textContent?.trim() === 'Delete');
+    if (!deleteButton) throw new Error('Delete button not found');
     fireEvent.click(deleteButton);
 
     expect(screen.getByText(/Confirm Deletion/i)).toBeInTheDocument();
@@ -89,9 +93,9 @@ describe('AttendeeList', () => {
   });
 
   it('filters attendees based on search query', () => {
-    const attendees = [
-      { firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com', eventDate: '2026-05-20', slug: 'alice' },
-      { firstName: 'Bob', lastName: 'Jones', email: 'bob@example.com', eventDate: '2026-05-21', slug: 'bob' },
+    const attendees: Attendee[] = [
+      { firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com', eventDate: '2026-05-20', ticketType: 'standard', slug: 'alice' },
+      { firstName: 'Bob', lastName: 'Jones', email: 'bob@example.com', eventDate: '2026-05-21', ticketType: 'standard', slug: 'bob' },
     ];
 
     store.dispatch(addAttendee(attendees[0]));
@@ -131,8 +135,8 @@ describe('AttendeeList', () => {
     const freshStore = configureStore();
     // Use clearAllAttendees to be sure
     freshStore.dispatch(clearAllAttendees());
-    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'A', email: 'z@e.com', eventDate: '2026-01-01', slug: 'z' }));
-    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'B', email: 'a@e.com', eventDate: '2026-01-02', slug: 'a' }));
+    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'A', email: 'z@e.com', eventDate: '2026-01-01', ticketType: 'standard', slug: 'z' }));
+    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'B', email: 'a@e.com', eventDate: '2026-01-02', ticketType: 'standard', slug: 'a' }));
 
     render(
       <Provider store={freshStore}>
@@ -172,7 +176,7 @@ describe('AttendeeList', () => {
       </Provider>,
     );
 
-    const clearAllButton = screen.getByRole('button', { name: /clear all/i });
+    const clearAllButton = screen.getByRole('button', { name: /delete all/i });
     fireEvent.click(clearAllButton);
 
     expect(screen.getByText(/Confirm Clear All/i)).toBeInTheDocument();
