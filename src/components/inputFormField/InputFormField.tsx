@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from 'react';
+import { Input } from 'tharaday';
 
 interface InputFormFieldProps {
   id: string;
@@ -15,15 +16,15 @@ const InputFormField = ({
   type = 'text',
   onChange,
 }: InputFormFieldProps) => (
-  <div className="form-group">
-    <label htmlFor={id}>{label}</label>
-    <input
-      className="form-control"
+  <div style={{ marginBottom: '1rem' }}>
+    <Input
+      label={label}
       id={id}
       name={id}
       value={value}
       type={type}
       onChange={onChange}
+      style={{ width: '100%' }}
     />
   </div>
 );

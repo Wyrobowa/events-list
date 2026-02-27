@@ -1,12 +1,23 @@
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { NavBar } from 'tharaday';
 
-const Header = () => (
-  <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-    <div className="navbar-nav">
-      <Link to="/" className="nav-item nav-link">Attendees list</Link>
-      <Link to="/add" className="nav-item nav-link">Add attendee</Link>
-    </div>
-  </nav>
-);
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const navItems = [
+    { id: '/', label: 'Attendees list', href: '/' },
+    { id: '/add', label: 'Add attendee', href: '/add' },
+  ];
+
+  return (
+    <NavBar
+      items={navItems}
+      activeId={location.pathname}
+      onItemClick={(id) => navigate(id)}
+      logo={<strong>Event Form</strong>}
+    />
+  );
+};
 
 export default Header;

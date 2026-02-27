@@ -34,8 +34,10 @@ Runs ESLint to check the code for style and potential errors.
 
 *   **Framework**: React 19
 *   **Build Tool**: Vite
-*   **State Management**: Redux, React-Redux, Redux-Thunk
-*   **Routing**: React-Router-Dom
+*   **Language**: TypeScript
+*   **Design System**: Tharaday DS
+*   **State Management**: Redux, React-Redux, Redux Toolkit
+*   **Routing**: React-Router-Dom v7
 *   **Validation**: Yup
-*   **Testing**: Vitest, Enzyme, React Testing Library
+*   **Testing**: Vitest, React Testing Library
 *   **Date Handling**: Day.js

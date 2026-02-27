@@ -1,6 +1,7 @@
-import { useEffect, useRef, ChangeEvent, FormEvent } from 'react';
+import { useEffect, ChangeEvent, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
+import { Box, Card, CardContent } from 'tharaday';
 
 import * as actions from '../../actions/attendeeFormActions';
 import Alert from '../../components/alert/Alert';
@@ -28,8 +29,6 @@ const AttendeeForm = () => {
     dispatch(actions.clearAttendeeForm());
   }, [dispatch]);
 
-  const submitButton = useRef<HTMLButtonElement>(null);
-
   const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
     dispatch(actions.editAttendeeForm(name, value));
@@ -37,60 +36,61 @@ const AttendeeForm = () => {
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
-    if (submitButton.current) {
-      submitButton.current.setAttribute('disabled', 'true');
-    }
-
-    dispatch(actions.sendAttendeeForm(schema, attendeeForm, submitButton));
+    dispatch(actions.sendAttendeeForm(schema, attendeeForm));
   };
 
   return (
-    <div className="container">
-      {status !== 'initial' && (
-        <Alert type={status} msg={msg}>
-          {formValidationErrors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </Alert>
-      )}
-      <div className="container col-md-4 mt-3">
-        <form>
-          <InputFormField
-            label="First Name"
-            id="firstName"
-            onChange={handleInputChange}
-            value={attendeeForm.firstName}
-          />
-          <InputFormField
-            label="Last Name"
-            id="lastName"
-            onChange={handleInputChange}
-            value={attendeeForm.lastName}
-          />
-          <InputFormField
-            label="Email"
-            id="email"
-            type="email"
-            onChange={handleInputChange}
-            value={attendeeForm.email}
-          />
-          <InputFormField
-            label="Event Date"
-            id="eventDate"
-            type="date"
-            onChange={handleInputChange}
-            value={attendeeForm.eventDate}
-          />
-          <Button
-            type="submit"
-            text="Add"
-            onClick={handleSubmit}
-            className="btn btn-primary btn-block"
-            ref={submitButton}
-          />
-        </form>
+    <Box padding={6}>
+      <div className="container">
+        {status !== 'initial' && (
+          <Alert type={status} msg={msg}>
+            {formValidationErrors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </Alert>
+        )}
+        <Box padding={4} style={{ maxWidth: '400px', margin: '1rem auto' }}>
+          <Card>
+            <CardContent>
+              <form>
+                <InputFormField
+                  label="First Name"
+                  id="firstName"
+                  onChange={handleInputChange}
+                  value={attendeeForm.firstName}
+                />
+                <InputFormField
+                  label="Last Name"
+                  id="lastName"
+                  onChange={handleInputChange}
+                  value={attendeeForm.lastName}
+                />
+                <InputFormField
+                  label="Email"
+                  id="email"
+                  type="email"
+                  onChange={handleInputChange}
+                  value={attendeeForm.email}
+                />
+                <InputFormField
+                  label="Event Date"
+                  id="eventDate"
+                  type="date"
+                  onChange={handleInputChange}
+                  value={attendeeForm.eventDate}
+                />
+                <Button
+                  type="submit"
+                  text="Add"
+                  onClick={handleSubmit}
+                  className="btn btn-primary btn-block"
+                />
+              </form>
+            </CardContent>
+          </Card>
+        </Box>
       </div>
-    </div>
+    </Box>
   );
 };
 

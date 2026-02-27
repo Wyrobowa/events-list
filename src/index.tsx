@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import 'tharaday/styles.css';
 
 import App from './App';
 import configureStore from './configureStore';

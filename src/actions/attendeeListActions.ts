@@ -14,8 +14,18 @@ export const getAttendeeListUnsuccessful = () => ({
 });
 
 export const requestAttendeeList = () => (dispatch: AppDispatch) => {
-  fetch('http://localhost:3001/list')
+  fetch('https://jsonplaceholder.typicode.com/posts')
     .then((res) => res.json())
-    .then((json) => dispatch(getAttendeeListSuccessful(json.data)))
+    .then((json) => {
+      // jsonplaceholder returns an array of posts, we map them to Attendees for consistency
+      const attendees = json.slice(0, 10).map((post: any) => ({
+        firstName: post.title.split(' ')[0],
+        lastName: post.title.split(' ')[1] || 'Lastname',
+        email: `user${post.id}@example.com`,
+        eventDate: '2026-05-20',
+        slug: `attendee-${post.id}`,
+      }));
+      dispatch(getAttendeeListSuccessful(attendees));
+    })
     .catch(() => dispatch(getAttendeeListUnsuccessful()));
 };

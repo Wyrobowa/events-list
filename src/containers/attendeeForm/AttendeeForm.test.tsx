@@ -4,10 +4,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AttendeeForm from './AttendeeForm';
 import configureStore from '../../configureStore';
 
-const store = configureStore();
-
 describe('AttendeeForm', () => {
   it('renders AttendeeForm with all input fields and a submit button', () => {
+    const store = configureStore();
     render(
       <Provider store={store}>
         <Router>

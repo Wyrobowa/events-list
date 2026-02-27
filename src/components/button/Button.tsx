@@ -1,21 +1,39 @@
-import { forwardRef, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
+import { Button as DSButton } from 'tharaday';
 
 interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   onClick: MouseEventHandler<HTMLButtonElement>;
   text?: string;
   className?: string;
+  disabled?: boolean;
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((
-  { type = 'button', onClick, text = '', className = 'btn' },
-  ref
-) => (
-  <button type={type} onClick={onClick} className={className} ref={ref}>
-    {text}
-  </button>
-));
+const Button = ({
+  type = 'button',
+  onClick,
+  text = '',
+  className = '',
+  disabled = false,
+}: ButtonProps) => {
+  let intent: any = 'neutral';
+  if (className.includes('btn-primary')) intent = 'info';
+  if (className.includes('btn-success')) intent = 'success';
+  if (className.includes('btn-danger')) intent = 'danger';
+  if (className.includes('btn-warning')) intent = 'warning';
 
-Button.displayName = 'Button';
+  return (
+    <DSButton
+      type={type}
+      onClick={onClick}
+      intent={intent}
+      disabled={disabled}
+      fullWidth={className.includes('btn-block')}
+      className={className}
+    >
+      {text}
+    </DSButton>
+  );
+};
 
 export default Button;

@@ -29,12 +29,12 @@ export const formValidationErrors = (errors: string[]) => ({
   errors,
 });
 
-export const sendAttendeeForm = (schema: any, attendeeForm: Attendee, ref: React.RefObject<HTMLButtonElement | null>) => async (dispatch: AppDispatch) => {
+export const sendAttendeeForm = (schema: any, attendeeForm: Attendee) => async (dispatch: AppDispatch) => {
   try {
     await schema.validate(attendeeForm, { abortEarly: false });
 
     try {
-      const response = await fetch('http://localhost:3001/add', {
+      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,8 +57,6 @@ export const sendAttendeeForm = (schema: any, attendeeForm: Attendee, ref: React
     const errors = error.inner.map((item: any) => (item.message));
 
     dispatch(formValidationErrors(errors));
-  } finally {
-    ref.current?.removeAttribute('disabled');
   }
 };
 
