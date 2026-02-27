@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { vi, beforeEach } from 'vitest';
 import AttendeeList from './AttendeeList';
 import configureStore from '../../configureStore';
-import * as actions from '../../actions/attendeeListActions';
+import { addAttendee } from '../../store/slices/attendeeListSlice';
 
 const store = configureStore();
 
@@ -31,7 +32,7 @@ describe('AttendeeList', () => {
       },
     ];
 
-    store.dispatch(actions.getAttendeeListSuccessful(attendees));
+    store.dispatch(addAttendee(attendees[0]));
 
     render(
       <Provider store={store}>
@@ -45,6 +46,34 @@ describe('AttendeeList', () => {
     expect(screen.getByText('Actions')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /edit/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument();
+  });
+
+  it('shows confirmation modal when delete button is clicked', () => {
+    const attendees = [
+      {
+        firstName: 'Jane',
+        lastName: 'Doe',
+        email: 'jane@example.com',
+        eventDate: '2026-05-20',
+        slug: 'attendee-2',
+      },
+    ];
+
+    store.dispatch(addAttendee(attendees[0]));
+
+    render(
+      <Provider store={store}>
+        <Router>
+          <AttendeeList />
+        </Router>
+      </Provider>,
+    );
+
+    const deleteButton = screen.getAllByRole('button', { name: /delete/i })[0];
+    fireEvent.click(deleteButton);
+
+    expect(screen.getByText(/Confirm Deletion/i)).toBeInTheDocument();
+    expect(screen.getByText(/Are you sure you want to delete this attendee\?/i)).toBeInTheDocument();
   });
 
   it('renders "Add Attendee" button', () => {

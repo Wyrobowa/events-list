@@ -6,7 +6,7 @@ import configureStore from './configureStore';
 const store = configureStore();
 
 describe('App', () => {
-  it('renders App with Header', () => {
+  it('renders Welcome message by default when not logged in', () => {
     window.history.pushState({}, 'Test page', '/events-list/');
     render(
       <Provider store={store}>
@@ -14,6 +14,7 @@ describe('App', () => {
       </Provider>,
     );
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    expect(screen.getByText(/Welcome to Event Form/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Log in to Continue/i })).toBeInTheDocument();
   });
 });

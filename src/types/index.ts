@@ -19,7 +19,15 @@ export interface AttendeeListState {
   msg: string;
 }
 
+export interface AuthState {
+  isLoggedIn: boolean;
+  user: string | null;
+  status: 'initial' | 'loading' | 'success' | 'danger';
+  msg: string;
+}
+
 export interface RootState {
   attendee: AttendeeFormState;
   attendeeList: AttendeeListState;
+  auth: AuthState;
 }
