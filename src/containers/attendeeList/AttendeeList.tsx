@@ -3,22 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Text,
   Box,
-  Button,
-  Modal,
-  Input,
 } from 'tharaday';
 
 import { fetchAttendees } from '../../store/slices/attendeeListSlice';
 import Alert from '../../components/alert/Alert';
-import { RootState } from '../../types';
+import { RootState, Attendee } from '../../types';
 import { AppDispatch } from '../../configureStore';
-import AttendeeForm from '../attendeeForm/AttendeeForm';
-import { PlusIcon, TrashIcon, DownloadIcon } from '../../components/icons/Icons';
-import DeleteConfirmationModal from '../../components/deleteConfirmationModal/DeleteConfirmationModal';
 import { useAttendeeFilters } from '../../hooks/useAttendeeFilters';
 import AttendeeTable from './components/AttendeeTable';
 import { useAttendeeModals } from './hooks/useAttendeeModals';
 import { exportAttendeesToCSV } from '../../utils/csvExport';
+import AttendeeListHeader from './components/AttendeeListHeader';
+import AttendeeListFilters from './components/AttendeeListFilters';
+import AttendeeListModals from './components/AttendeeListModals';
 
 const AttendeeList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -86,53 +83,26 @@ const AttendeeList = () => {
 
   return (
     <Box padding={6}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Text variant="h2">Attendees List</Text>
-        <Box display="flex" gap={2}>
-          {attendeeList.length > 0 && (
-            <Button onClick={handleClearAll} intent="danger" variant="outline">
-              <Box display="flex" alignItems="center" gap={1}>
-                <TrashIcon size={16} />
-                Delete All
-              </Box>
-            </Button>
-          )}
-          {selectedSlugs.length > 0 && (
-            <Button onClick={handleBulkDelete} intent="danger" variant="solid">
-              <Box display="flex" alignItems="center" gap={1}>
-                <TrashIcon size={16} />
-                Delete Selected ({selectedSlugs.length})
-              </Box>
-            </Button>
-          )}
-          {filteredAndSortedAttendees.length > 0 && (
-            <Button onClick={handleExportCSV} variant="outline" intent="info">
-              <Box display="flex" alignItems="center" gap={1}>
-                <DownloadIcon size={16} />
-                Export CSV
-              </Box>
-            </Button>
-          )}
-          <Button onClick={handleAdd}>
-            <Box display="flex" alignItems="center" gap={1}>
-              <PlusIcon size={16} />
-              Add Attendee
-            </Box>
-          </Button>
-        </Box>
-      </Box>
+      <AttendeeListHeader
+        attendeeCount={attendeeList.length}
+        selectedCount={selectedSlugs.length}
+        filteredCount={filteredAndSortedAttendees.length}
+        onClearAll={handleClearAll}
+        onBulkDelete={handleBulkDelete}
+        onExportCSV={handleExportCSV}
+        onAdd={handleAdd}
+      />
 
       {status !== 'initial' && (
         <Alert type={status} msg={msg} />
       )}
 
-      <Box mb={4} width="300px">
-        <Input
-          placeholder="Search attendees..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </Box>
+      <AttendeeListFilters
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        sortKey={sortConfig?.key || ''}
+        onSort={handleSort}
+      />
 
       {status !== 'danger' && filteredAndSortedAttendees.length > 0 && (
         <AttendeeTable
@@ -158,37 +128,20 @@ const AttendeeList = () => {
         </Box>
       )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        size="md"
-        title={editingSlug ? 'Edit Attendee' : 'Add Attendee'}
-      >
-        <AttendeeForm slug={editingSlug} onSuccess={handleCloseModal} />
-      </Modal>
-
-      <DeleteConfirmationModal
-        isOpen={isDeleteModalOpen}
-        onClose={cancelDelete}
-        onConfirm={confirmDelete}
-      />
-
-      <DeleteConfirmationModal
-        isOpen={isClearAllModalOpen}
-        onClose={cancelClearAll}
-        onConfirm={confirmClearAll}
-        title="Confirm Clear All"
-        message="Are you sure you want to remove all attendees? This action cannot be undone."
-        confirmText="Delete All"
-      />
-
-      <DeleteConfirmationModal
-        isOpen={isBulkDeleteModalOpen}
-        onClose={cancelBulkDelete}
-        onConfirm={confirmBulkDelete}
-        title="Confirm Bulk Delete"
-        message={`Are you sure you want to remove ${selectedSlugs.length} selected attendees? This action cannot be undone.`}
-        confirmText="Delete Selected"
+      <AttendeeListModals
+        isModalOpen={isModalOpen}
+        isDeleteModalOpen={isDeleteModalOpen}
+        isClearAllModalOpen={isClearAllModalOpen}
+        isBulkDeleteModalOpen={isBulkDeleteModalOpen}
+        editingSlug={editingSlug}
+        selectedCount={selectedSlugs.length}
+        onCloseModal={handleCloseModal}
+        onConfirmDelete={confirmDelete}
+        onCancelDelete={cancelDelete}
+        onConfirmClearAll={confirmClearAll}
+        onCancelClearAll={cancelClearAll}
+        onConfirmBulkDelete={confirmBulkDelete}
+        onCancelBulkDelete={cancelBulkDelete}
       />
     </Box>
   );

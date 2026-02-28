@@ -50,7 +50,6 @@ const AttendeeTable = memo(({
               onChange={onSelectAll}
             />
           </TableHead>
-          <TableHead>#</TableHead>
           <TableHead style={{ cursor: 'pointer' }} onClick={() => onSort('firstName')}>
             <Box display="flex" alignItems="center" gap={1}>
               First Name {sortConfig?.key === 'firstName' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
@@ -98,7 +97,6 @@ const AttendeeTable = memo(({
                 onChange={() => attendee.slug && onSelect(attendee.slug)}
               />
             </TableCell>
-            <TableCell>{index + 1}</TableCell>
             <TableCell>{attendee.firstName}</TableCell>
             <TableCell>{attendee.lastName}</TableCell>
             <TableCell>{attendee.eventTitle}</TableCell>

@@ -3,7 +3,7 @@ import { Attendee } from '../types';
 
 export const useAttendeeFilters = (attendees: Attendee[]) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortConfig, setSortConfig] = useState<{ key: keyof Attendee; direction: 'asc' | 'desc' } | null>(null);
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Attendee; direction: 'asc' | 'desc' } | null>({ key: 'lastName', direction: 'asc' });
 
   const handleSort = (key: keyof Attendee) => {
     let direction: 'asc' | 'desc' = 'asc';

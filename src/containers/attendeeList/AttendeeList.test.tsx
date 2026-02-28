@@ -136,8 +136,8 @@ describe('AttendeeList', () => {
     const freshStore = configureStore();
     // Use clearAllAttendees to be sure
     freshStore.dispatch(clearAllAttendees());
-    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'A', email: 'z@e.com', eventDate: '2026-01-01', ticketType: 'standard', eventTitle: 'Z', eventDescription: 'Z', slug: 'z' }));
-    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'B', email: 'a@e.com', eventDate: '2026-01-02', ticketType: 'standard', eventTitle: 'A', eventDescription: 'A', slug: 'a' }));
+    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'A', email: 'a@e.com', eventDate: '2026-01-02', ticketType: 'standard', eventTitle: 'A', eventDescription: 'A', slug: 'a' }));
+    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'B', email: 'z@e.com', eventDate: '2026-01-01', ticketType: 'standard', eventTitle: 'Z', eventDescription: 'Z', slug: 'z' }));
 
     render(
       <Provider store={freshStore}>
@@ -147,21 +147,21 @@ describe('AttendeeList', () => {
       </Provider>,
     );
 
-    const firstNameHeader = screen.getByText(/First Name/i);
-    
-    // Initial order (as added): Zebra, Apple
+    // Initial order (sorted by lastName ASC by default): Apple, Zebra
     let rows = screen.getAllByRole('row');
     // rows[0] is header
-    expect(rows[1]).toHaveTextContent('Zebra');
-    expect(rows[2]).toHaveTextContent('Apple');
+    expect(rows[1]).toHaveTextContent('Apple');
+    expect(rows[2]).toHaveTextContent('Zebra');
 
-    // Click to sort ASC: Apple, Zebra
+    const firstNameHeader = screen.getByRole('columnheader', { name: /First Name/i });
+
+    // Click to sort firstName ASC: Apple, Zebra
     fireEvent.click(firstNameHeader);
     rows = screen.getAllByRole('row');
     expect(rows[1]).toHaveTextContent('Apple');
     expect(rows[2]).toHaveTextContent('Zebra');
 
-    // Click to sort DESC: Zebra, Apple
+    // Click to sort firstName DESC: Zebra, Apple
     fireEvent.click(firstNameHeader);
     rows = screen.getAllByRole('row');
     expect(rows[1]).toHaveTextContent('Zebra');
