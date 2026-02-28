@@ -21,7 +21,10 @@ describe('useAttendeeModals', () => {
       <Provider store={store}>{children}</Provider>
     );
 
-    const { result } = renderHook(() => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }), { wrapper });
+    const { result } = renderHook(
+      () => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }),
+      { wrapper },
+    );
 
     expect(result.current.isModalOpen).toBe(false);
     expect(result.current.isDeleteModalOpen).toBe(false);
@@ -37,7 +40,10 @@ describe('useAttendeeModals', () => {
       <Provider store={store}>{children}</Provider>
     );
 
-    const { result } = renderHook(() => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }), { wrapper });
+    const { result } = renderHook(
+      () => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }),
+      { wrapper },
+    );
 
     act(() => {
       result.current.handlers.handleAdd();
@@ -60,7 +66,10 @@ describe('useAttendeeModals', () => {
       <Provider store={store}>{children}</Provider>
     );
 
-    const { result } = renderHook(() => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }), { wrapper });
+    const { result } = renderHook(
+      () => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }),
+      { wrapper },
+    );
 
     act(() => {
       result.current.handlers.handleEdit('some-slug');
@@ -77,7 +86,10 @@ describe('useAttendeeModals', () => {
       <Provider store={store}>{children}</Provider>
     );
 
-    const { result } = renderHook(() => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }), { wrapper });
+    const { result } = renderHook(
+      () => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }),
+      { wrapper },
+    );
 
     act(() => {
       result.current.handlers.handleDeleteClick('slug-to-delete');
@@ -99,7 +111,10 @@ describe('useAttendeeModals', () => {
       <Provider store={store}>{children}</Provider>
     );
 
-    const { result } = renderHook(() => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }), { wrapper });
+    const { result } = renderHook(
+      () => useAttendeeModals({ selectedSlugs: [], setSelectedSlugs }),
+      { wrapper },
+    );
 
     act(() => {
       result.current.handlers.handleClearAll();
@@ -121,7 +136,10 @@ describe('useAttendeeModals', () => {
       <Provider store={store}>{children}</Provider>
     );
 
-    const { result } = renderHook(() => useAttendeeModals({ selectedSlugs: ['s1', 's2'], setSelectedSlugs }), { wrapper });
+    const { result } = renderHook(
+      () => useAttendeeModals({ selectedSlugs: ['s1', 's2'], setSelectedSlugs }),
+      { wrapper },
+    );
 
     act(() => {
       result.current.handlers.handleBulkDelete();

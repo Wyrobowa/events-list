@@ -27,10 +27,10 @@ describe('exportAttendeesToCSV', () => {
     const mockUrl = 'blob:mock-url';
     const createObjectURLSpy = vi.spyOn(URL, 'createObjectURL').mockReturnValue(mockUrl);
     const revokeObjectURLSpy = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
-    
+
     const appendChildSpy = vi.spyOn(document.body, 'appendChild');
     const removeChildSpy = vi.spyOn(document.body, 'removeChild');
-    
+
     // We can't easily mock the 'a' click but we can check if it was created and configured
     const mockAnchor = document.createElement('a');
     const createElementSpy = vi.spyOn(document, 'createElement').mockReturnValue(mockAnchor);
@@ -46,7 +46,7 @@ describe('exportAttendeesToCSV', () => {
     expect(clickSpy).toHaveBeenCalled();
     expect(removeChildSpy).toHaveBeenCalledWith(mockAnchor);
     expect(revokeObjectURLSpy).toHaveBeenCalledWith(mockUrl);
-    
+
     vi.restoreAllMocks();
   });
 });

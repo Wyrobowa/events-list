@@ -90,7 +90,9 @@ describe('AttendeeForm', () => {
     fireEvent.click(deleteButton);
 
     expect(screen.getByText(/Confirm Deletion/i)).toBeInTheDocument();
-    expect(screen.getByText(/Are you sure you want to delete this attendee\?/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Are you sure you want to delete this attendee\?/i),
+    ).toBeInTheDocument();
   });
 
   it('calls onSuccess when Delete is confirmed in confirmation modal', () => {

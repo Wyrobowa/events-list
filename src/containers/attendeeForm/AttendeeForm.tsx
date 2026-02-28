@@ -1,7 +1,7 @@
 import { useEffect, ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import {Box, Button, Select, Textarea} from 'tharaday';
+import { Box, Button, Select, Textarea } from 'tharaday';
 
 import {
   editAttendeeForm,
@@ -20,13 +20,16 @@ import { PlusIcon, SaveIcon, TrashIcon } from '../../components/icons/Icons';
 import DeleteConfirmationModal from '../../components/deleteConfirmationModal/DeleteConfirmationModal';
 
 const schema = yup.object().shape({
-  firstName: yup.string().required('First Name field can\'t be empty!'),
-  lastName: yup.string().required('Last Name field can\'t be empty!'),
-  email: yup.string().email('Please enter a valid email!').required('Email field can\'t be empty!'),
-  eventDate: yup.date().required('Event Date field can\'t be empty!'),
-  ticketType: yup.string().oneOf(['standard', 'vip', 'speaker']).required('Ticket Type field can\'t be empty!'),
-  eventTitle: yup.string().required('Event Title field can\'t be empty!'),
-  eventDescription: yup.string().required('Event Description field can\'t be empty!'),
+  firstName: yup.string().required("First Name field can't be empty!"),
+  lastName: yup.string().required("Last Name field can't be empty!"),
+  email: yup.string().email('Please enter a valid email!').required("Email field can't be empty!"),
+  eventDate: yup.date().required("Event Date field can't be empty!"),
+  ticketType: yup
+    .string()
+    .oneOf(['standard', 'vip', 'speaker'])
+    .required("Ticket Type field can't be empty!"),
+  eventTitle: yup.string().required("Event Title field can't be empty!"),
+  eventDescription: yup.string().required("Event Description field can't be empty!"),
 });
 
 interface AttendeeFormProps {
@@ -36,10 +39,12 @@ interface AttendeeFormProps {
 
 const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
-  
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  
-  const { status, msg, formValidationErrors, attendeeForm } = useSelector((state: RootState) => state.attendee);
+
+  const { status, msg, formValidationErrors, attendeeForm } = useSelector(
+    (state: RootState) => state.attendee,
+  );
   const { attendeeList } = useSelector((state: RootState) => state.attendeeList);
 
   useEffect(() => {
@@ -60,7 +65,9 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
     }
   }, [dispatch, slug, attendeeList]);
 
-  const handleInputChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = ({
+    target,
+  }: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = target;
     dispatch(editAttendeeForm({ field: name, value }));
   };
@@ -147,11 +154,11 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
 
           <Box mb={4}>
             <Textarea
-                label="Event Description"
-                id="eventDescription"
-                onChange={handleInputChange}
-                value={attendeeForm.eventDescription}
-                fullWidth
+              label="Event Description"
+              id="eventDescription"
+              onChange={handleInputChange}
+              value={attendeeForm.eventDescription}
+              fullWidth
             />
           </Box>
 
@@ -170,13 +177,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
             />
           </Box>
           <Box display="flex" gap={2}>
-            <Button
-              type="submit"
-              onClick={handleSubmit}
-              intent="success"
-              variant="solid"
-              fullWidth
-            >
+            <Button type="submit" onClick={handleSubmit} intent="success" variant="solid" fullWidth>
               <Box display="flex" alignItems="center" gap={1}>
                 {slug ? (
                   <>
@@ -191,13 +192,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
                 )}
               </Box>
             </Button>
-            <Button
-              type="button"
-              onClick={handleCancel}
-              intent="neutral"
-              variant="solid"
-              fullWidth
-            >
+            <Button type="button" onClick={handleCancel} intent="neutral" variant="solid" fullWidth>
               Cancel
             </Button>
             {slug && (

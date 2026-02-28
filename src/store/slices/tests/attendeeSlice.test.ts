@@ -50,7 +50,15 @@ describe('attendeeSlice', () => {
   it('should handle clearAttendeeForm', () => {
     const state = {
       ...initialState,
-      attendeeForm: { firstName: 'John', lastName: 'Doe', email: '', eventDate: '', ticketType: 'standard' as const, eventTitle: '', eventDescription: '' },
+      attendeeForm: {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: '',
+        eventDate: '',
+        ticketType: 'standard' as const,
+        eventTitle: '',
+        eventDescription: '',
+      },
     };
     const actual = reducer(state, clearAttendeeForm());
     expect(actual.attendeeForm).toEqual(initialState.attendeeForm);

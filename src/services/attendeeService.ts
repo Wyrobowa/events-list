@@ -7,7 +7,7 @@ export const attendeeService = {
     const response = await fetch(`${API_BASE_URL}/posts`);
     if (!response.ok) throw new Error('Failed to fetch attendees');
     const json = await response.json();
-    
+
     // jsonplaceholder returns an array of posts, we map them to Attendees for consistency
     return json.slice(0, 10).map((post: any) => ({
       firstName: post.title.split(' ')[0],
@@ -33,7 +33,7 @@ export const attendeeService = {
         userId: 1,
       }),
     });
-    
+
     if (!response.ok) throw new Error('Failed to create attendee');
     const json = await response.json();
     return json.id;
@@ -50,5 +50,5 @@ export const attendeeService = {
   async logout(): Promise<void> {
     // Mock logout logic
     return Promise.resolve();
-  }
+  },
 };

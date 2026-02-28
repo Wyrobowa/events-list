@@ -95,8 +95,26 @@ describe('AttendeeList', () => {
 
   it('filters attendees based on search query', () => {
     const attendees: Attendee[] = [
-      { firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com', eventDate: '2026-05-20', ticketType: 'standard', eventTitle: 'A', eventDescription: 'A desc', slug: 'alice' },
-      { firstName: 'Bob', lastName: 'Jones', email: 'bob@example.com', eventDate: '2026-05-21', ticketType: 'standard', eventTitle: 'B', eventDescription: 'B desc', slug: 'bob' },
+      {
+        firstName: 'Alice',
+        lastName: 'Smith',
+        email: 'alice@example.com',
+        eventDate: '2026-05-20',
+        ticketType: 'standard',
+        eventTitle: 'A',
+        eventDescription: 'A desc',
+        slug: 'alice',
+      },
+      {
+        firstName: 'Bob',
+        lastName: 'Jones',
+        email: 'bob@example.com',
+        eventDate: '2026-05-21',
+        ticketType: 'standard',
+        eventTitle: 'B',
+        eventDescription: 'B desc',
+        slug: 'bob',
+      },
     ];
 
     store.dispatch(addAttendee(attendees[0]));
@@ -136,8 +154,30 @@ describe('AttendeeList', () => {
     const freshStore = configureStore();
     // Use clearAllAttendees to be sure
     freshStore.dispatch(clearAllAttendees());
-    freshStore.dispatch(addAttendee({ firstName: 'Apple', lastName: 'A', email: 'a@e.com', eventDate: '2026-01-02', ticketType: 'standard', eventTitle: 'A', eventDescription: 'A', slug: 'a' }));
-    freshStore.dispatch(addAttendee({ firstName: 'Zebra', lastName: 'B', email: 'z@e.com', eventDate: '2026-01-01', ticketType: 'standard', eventTitle: 'Z', eventDescription: 'Z', slug: 'z' }));
+    freshStore.dispatch(
+      addAttendee({
+        firstName: 'Apple',
+        lastName: 'A',
+        email: 'a@e.com',
+        eventDate: '2026-01-02',
+        ticketType: 'standard',
+        eventTitle: 'A',
+        eventDescription: 'A',
+        slug: 'a',
+      }),
+    );
+    freshStore.dispatch(
+      addAttendee({
+        firstName: 'Zebra',
+        lastName: 'B',
+        email: 'z@e.com',
+        eventDate: '2026-01-01',
+        ticketType: 'standard',
+        eventTitle: 'Z',
+        eventDescription: 'Z',
+        slug: 'z',
+      }),
+    );
 
     render(
       <Provider store={freshStore}>
@@ -181,6 +221,8 @@ describe('AttendeeList', () => {
     fireEvent.click(clearAllButton);
 
     expect(screen.getByText(/Confirm Clear All/i)).toBeInTheDocument();
-    expect(screen.getByText(/Are you sure you want to remove all attendees\?/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Are you sure you want to remove all attendees\?/i),
+    ).toBeInTheDocument();
   });
 });

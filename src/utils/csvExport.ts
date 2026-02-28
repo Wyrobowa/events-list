@@ -6,13 +6,15 @@ export const exportAttendeesToCSV = (attendees: Attendee[]) => {
   const headers = ['First Name', 'Last Name', 'Email', 'Event Date', 'Ticket Type'];
   const csvRows = [
     headers.join(','),
-    ...attendees.map((attendee) => [
-      `"${attendee.firstName}"`,
-      `"${attendee.lastName}"`,
-      `"${attendee.email}"`,
-      `"${attendee.eventDate}"`,
-      `"${attendee.ticketType}"`,
-    ].join(',')),
+    ...attendees.map((attendee) =>
+      [
+        `"${attendee.firstName}"`,
+        `"${attendee.lastName}"`,
+        `"${attendee.email}"`,
+        `"${attendee.eventDate}"`,
+        `"${attendee.ticketType}"`,
+      ].join(','),
+    ),
   ];
 
   const csvContent = csvRows.join('\n');

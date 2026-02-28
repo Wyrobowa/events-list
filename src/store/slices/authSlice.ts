@@ -27,16 +27,13 @@ export const login = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async () => {
-    await attendeeService.logout();
-    localStorage.removeItem('user');
-  }
-);
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await attendeeService.logout();
+  localStorage.removeItem('user');
+});
 
 const authSlice = createSlice({
   name: 'auth',
@@ -60,7 +57,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'danger';
-        state.msg = action.payload as string || 'Something went wrong!';
+        state.msg = (action.payload as string) || 'Something went wrong!';
       })
       .addCase(logout.fulfilled, (state) => {
         state.isLoggedIn = false;

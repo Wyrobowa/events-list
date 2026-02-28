@@ -1,9 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  Text,
-  Box,
-} from 'tharaday';
+import { Text, Box } from 'tharaday';
 
 import { fetchAttendees } from '../../store/slices/attendeeListSlice';
 import Alert from '../../components/alert/Alert';
@@ -27,9 +24,14 @@ const AttendeeList = () => {
   const {
     searchQuery,
     setSearchQuery,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
     sortConfig,
     handleSort,
     filteredAndSortedAttendees,
+    clearFilters,
   } = useAttendeeFilters(attendeeList);
 
   const {
@@ -65,7 +67,7 @@ const AttendeeList = () => {
 
   const handleSelectAttendee = useCallback((slug: string) => {
     setSelectedSlugs((prev) =>
-      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug],
     );
   }, []);
 
@@ -93,15 +95,18 @@ const AttendeeList = () => {
         onAdd={handleAdd}
       />
 
-      {status !== 'initial' && (
-        <Alert type={status} msg={msg} />
-      )}
+      {status !== 'initial' && <Alert type={status} msg={msg} />}
 
       <AttendeeListFilters
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        startDate={startDate}
+        onStartDateChange={setStartDate}
+        endDate={endDate}
+        onEndDateChange={setEndDate}
         sortKey={sortConfig?.key || ''}
         onSort={handleSort}
+        onClearFilters={clearFilters}
       />
 
       {status !== 'danger' && filteredAndSortedAttendees.length > 0 && (
@@ -117,14 +122,20 @@ const AttendeeList = () => {
           onRowClick={handleEdit}
         />
       )}
-      {status !== 'danger' && attendeeList.length > 0 && filteredAndSortedAttendees.length === 0 && (
-        <Box padding={10}>
-          <Text variant="h3" align="center">No attendees match your search.</Text>
-        </Box>
-      )}
+      {status !== 'danger' &&
+        attendeeList.length > 0 &&
+        filteredAndSortedAttendees.length === 0 && (
+          <Box padding={10}>
+            <Text variant="h3" align="center">
+              No attendees match your search.
+            </Text>
+          </Box>
+        )}
       {status !== 'danger' && attendeeList.length === 0 && (
         <Box padding={10}>
-          <Text variant="h2" align="center">No Attendees!</Text>
+          <Text variant="h2" align="center">
+            No Attendees!
+          </Text>
         </Box>
       )}
 

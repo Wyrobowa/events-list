@@ -20,12 +20,15 @@ const initialState: AttendeeFormState = {
 
 export const submitAttendeeForm = createAsyncThunk(
   'attendee/submitAttendeeForm',
-  async ({ schema, attendeeForm }: { schema: any, attendeeForm: Attendee }, { dispatch, rejectWithValue }) => {
+  async (
+    { schema, attendeeForm }: { schema: any; attendeeForm: Attendee },
+    { dispatch, rejectWithValue },
+  ) => {
     try {
       await schema.validate(attendeeForm, { abortEarly: false });
-      
+
       const id = await attendeeService.createAttendee(attendeeForm);
-      
+
       const newAttendee = {
         ...attendeeForm,
         slug: attendeeForm.slug || `attendee-${id || Date.now()}`,
@@ -40,7 +43,7 @@ export const submitAttendeeForm = createAsyncThunk(
       }
       return rejectWithValue({ type: 'api', message: error.message || 'Something went wrong!' });
     }
-  }
+  },
 );
 
 const attendeeSlice = createSlice({

@@ -19,12 +19,7 @@ const DeleteConfirmationModal = ({
   confirmText = 'Delete',
 }: DeleteConfirmationModalProps) => {
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      size="sm"
-      title={title}
-    >
+    <Modal isOpen={isOpen} onClose={onClose} size="sm" title={title}>
       <Box display="flex" flexDirection="column" gap={4} padding={2}>
         <Box mb={4}>
           <Text align="center">{message}</Text>
@@ -36,7 +31,9 @@ const DeleteConfirmationModal = ({
               {confirmText}
             </Box>
           </Button>
-          <Button onClick={onClose} variant="solid">Cancel</Button>
+          <Button onClick={onClose} variant="solid">
+            Cancel
+          </Button>
         </Box>
       </Box>
     </Modal>

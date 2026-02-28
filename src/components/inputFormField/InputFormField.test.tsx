@@ -5,12 +5,7 @@ describe('InputFormField', () => {
   it('renders InputFormField and calls onChange', () => {
     const handleChange = vi.fn();
     render(
-      <InputFormField
-        id="test-input"
-        label="Test Label"
-        value="initial"
-        onChange={handleChange}
-      />,
+      <InputFormField id="test-input" label="Test Label" value="initial" onChange={handleChange} />,
     );
 
     const input = screen.getByLabelText(/test label/i) as HTMLInputElement;

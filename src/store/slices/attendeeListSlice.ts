@@ -21,9 +21,11 @@ export const fetchAttendees = createAsyncThunk(
     try {
       return await attendeeService.fetchAttendees();
     } catch (error: any) {
-      return rejectWithValue(error.message || 'Something went wrong! List of attendees couldn\'t be loaded!');
+      return rejectWithValue(
+        error.message || "Something went wrong! List of attendees couldn't be loaded!",
+      );
     }
-  }
+  },
 );
 
 const attendeeListSlice = createSlice({
@@ -34,16 +36,16 @@ const attendeeListSlice = createSlice({
       state.attendeeList.push(normalizeAttendee(action.payload));
     },
     updateAttendee: (state, action: PayloadAction<Attendee>) => {
-      const index = state.attendeeList.findIndex(a => a.slug === action.payload.slug);
+      const index = state.attendeeList.findIndex((a) => a.slug === action.payload.slug);
       if (index !== -1) {
         state.attendeeList[index] = normalizeAttendee(action.payload);
       }
     },
     deleteAttendee: (state, action: PayloadAction<string>) => {
-      state.attendeeList = state.attendeeList.filter(a => a.slug !== action.payload);
+      state.attendeeList = state.attendeeList.filter((a) => a.slug !== action.payload);
     },
     deleteMultipleAttendees: (state, action: PayloadAction<string[]>) => {
-      state.attendeeList = state.attendeeList.filter(a => !action.payload.includes(a.slug || ''));
+      state.attendeeList = state.attendeeList.filter((a) => !action.payload.includes(a.slug || ''));
     },
     clearAllAttendees: (state) => {
       state.attendeeList = [];
@@ -66,5 +68,11 @@ const attendeeListSlice = createSlice({
   },
 });
 
-export const { addAttendee, updateAttendee, deleteAttendee, deleteMultipleAttendees, clearAllAttendees } = attendeeListSlice.actions;
+export const {
+  addAttendee,
+  updateAttendee,
+  deleteAttendee,
+  deleteMultipleAttendees,
+  clearAllAttendees,
+} = attendeeListSlice.actions;
 export default attendeeListSlice.reducer;

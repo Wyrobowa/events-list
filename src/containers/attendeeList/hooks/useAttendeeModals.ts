@@ -1,7 +1,11 @@
 import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../configureStore';
-import { deleteAttendee, deleteMultipleAttendees, clearAllAttendees } from '../../../store/slices/attendeeListSlice';
+import {
+  deleteAttendee,
+  deleteMultipleAttendees,
+  clearAllAttendees,
+} from '../../../store/slices/attendeeListSlice';
 
 interface UseAttendeeModalsProps {
   selectedSlugs: string[];

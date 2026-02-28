@@ -15,7 +15,7 @@ describe('AttendeeListHeader', () => {
 
   it('renders title and add button', () => {
     render(<AttendeeListHeader {...defaultProps} />);
-    
+
     expect(screen.getByText(/Attendees List/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Add Attendee/i })).toBeInTheDocument();
   });
@@ -64,7 +64,7 @@ describe('AttendeeListHeader', () => {
         onExportCSV={onExportCSV}
         onBulkDelete={onBulkDelete}
         selectedCount={1}
-      />
+      />,
     );
 
     fireEvent.click(screen.getByRole('button', { name: /Add Attendee/i }));

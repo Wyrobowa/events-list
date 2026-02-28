@@ -66,6 +66,42 @@ describe('useAttendeeFilters', () => {
     expect(result.current.filteredAndSortedAttendees[0].eventTitle).toBe('Vite Day');
   });
 
+  it('should filter attendees based on date range', () => {
+    const { result } = renderHook(() => useAttendeeFilters(mockAttendees));
+
+    // Filter by startDate only
+    act(() => {
+      result.current.setStartDate('2026-05-20');
+    });
+    expect(result.current.filteredAndSortedAttendees).toHaveLength(2); // Alice (20th), Bob (21st)
+    expect(result.current.filteredAndSortedAttendees.map((a) => a.firstName)).toContain('Alice');
+    expect(result.current.filteredAndSortedAttendees.map((a) => a.firstName)).toContain('Bob');
+
+    // Filter by endDate only
+    act(() => {
+      result.current.setStartDate('');
+      result.current.setEndDate('2026-05-20');
+    });
+    expect(result.current.filteredAndSortedAttendees).toHaveLength(2); // Charlie (19th), Alice (20th)
+    expect(result.current.filteredAndSortedAttendees.map((a) => a.firstName)).toContain('Charlie');
+    expect(result.current.filteredAndSortedAttendees.map((a) => a.firstName)).toContain('Alice');
+
+    // Filter by both startDate and endDate
+    act(() => {
+      result.current.setStartDate('2026-05-20');
+      result.current.setEndDate('2026-05-20');
+    });
+    expect(result.current.filteredAndSortedAttendees).toHaveLength(1); // Alice (20th)
+    expect(result.current.filteredAndSortedAttendees[0].firstName).toBe('Alice');
+
+    // Range with no matches
+    act(() => {
+      result.current.setStartDate('2026-06-01');
+      result.current.setEndDate('2026-06-30');
+    });
+    expect(result.current.filteredAndSortedAttendees).toHaveLength(0);
+  });
+
   it('should sort attendees when handleSort is called', () => {
     const { result } = renderHook(() => useAttendeeFilters(mockAttendees));
 
@@ -96,5 +132,31 @@ describe('useAttendeeFilters', () => {
     });
 
     expect(result.current.filteredAndSortedAttendees).toHaveLength(0);
+  });
+
+  it('should clear all filters and reset sort when clearFilters is called', () => {
+    const { result } = renderHook(() => useAttendeeFilters(mockAttendees));
+
+    act(() => {
+      result.current.setSearchQuery('Alice');
+      result.current.setStartDate('2026-05-20');
+      result.current.setEndDate('2026-05-21');
+      result.current.handleSort('firstName');
+    });
+
+    expect(result.current.searchQuery).toBe('Alice');
+    expect(result.current.startDate).toBe('2026-05-20');
+    expect(result.current.endDate).toBe('2026-05-21');
+    expect(result.current.sortConfig?.key).toBe('firstName');
+
+    act(() => {
+      result.current.clearFilters();
+    });
+
+    expect(result.current.searchQuery).toBe('');
+    expect(result.current.startDate).toBe('');
+    expect(result.current.endDate).toBe('');
+    expect(result.current.sortConfig).toEqual({ key: 'lastName', direction: 'asc' });
+    expect(result.current.filteredAndSortedAttendees).toHaveLength(3);
   });
 });

@@ -77,8 +77,26 @@ describe('attendeeListSlice', () => {
     const state = {
       ...initialState,
       attendeeList: [
-        { firstName: 'John', lastName: 'Doe', email: 'j@d.com', eventDate: '2026-01-01', ticketType: 'standard' as const, eventTitle: 'T1', eventDescription: 'D1', slug: '1' },
-        { firstName: 'Jane', lastName: 'Doe', email: 'ja@d.com', eventDate: '2026-01-02', ticketType: 'standard' as const, eventTitle: 'T2', eventDescription: 'D2', slug: '2' },
+        {
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'j@d.com',
+          eventDate: '2026-01-01',
+          ticketType: 'standard' as const,
+          eventTitle: 'T1',
+          eventDescription: 'D1',
+          slug: '1',
+        },
+        {
+          firstName: 'Jane',
+          lastName: 'Doe',
+          email: 'ja@d.com',
+          eventDate: '2026-01-02',
+          ticketType: 'standard' as const,
+          eventTitle: 'T2',
+          eventDescription: 'D2',
+          slug: '2',
+        },
       ],
     };
     const actual = reducer(state, clearAllAttendees());

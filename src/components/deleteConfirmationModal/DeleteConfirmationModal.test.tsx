@@ -25,7 +25,7 @@ describe('DeleteConfirmationModal', () => {
         title="Custom Title"
         message="Custom Message"
         confirmText="Confirm action"
-      />
+      />,
     );
 
     expect(screen.getByText('Custom Title')).toBeInTheDocument();
