@@ -35,7 +35,7 @@ const App = () => {
                   flexDirection="column"
                   alignItems="center"
                   gap={4}
-                  style={{ paddingTop: '5rem' }}
+                  paddingTop={14}
                 >
                   <Text variant="h2">Welcome to Event Form</Text>
                   <Text variant="body-lg">Please log in to manage attendees.</Text>

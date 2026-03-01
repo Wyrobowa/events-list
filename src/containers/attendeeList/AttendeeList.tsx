@@ -84,7 +84,7 @@ const AttendeeList = () => {
   }, [filteredAndSortedAttendees]);
 
   return (
-    <Box padding={6}>
+    <Box paddingTop={4} maxWidth="90%" style={{ margin: '0 auto' }}>
       <AttendeeListHeader
         attendeeCount={attendeeList.length}
         selectedCount={selectedSlugs.length}

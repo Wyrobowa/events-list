@@ -23,6 +23,7 @@ const Header = () => {
     <DSHeader
       logo={<strong>Event Form</strong>}
       user={isLoggedIn && user ? { name: user } : undefined}
+      maxWidth="90%"
       onLogin={handleLogin}
       onLogout={handleLogout}
     />
