@@ -21,7 +21,7 @@ const DeleteConfirmationModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="sm" title={title}>
       <Box display="flex" flexDirection="column" gap={4} padding={2}>
-        <Box mb={4}>
+        <Box marginBottom={4}>
           <Text align="center">{message}</Text>
         </Box>
         <Box display="flex" justifyContent="space-between" width="100%">

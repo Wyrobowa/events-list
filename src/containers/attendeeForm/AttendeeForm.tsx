@@ -152,7 +152,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
             value={attendeeForm.eventTitle}
           />
 
-          <Box mb={4}>
+          <Box marginBottom={4}>
             <Textarea
               label="Event Description"
               id="eventDescription"
@@ -162,7 +162,7 @@ const AttendeeForm = ({ slug, onSuccess }: AttendeeFormProps) => {
             />
           </Box>
 
-          <Box mb={4}>
+          <Box marginBottom={4}>
             <Select
               label="Ticket Type"
               name="ticketType"

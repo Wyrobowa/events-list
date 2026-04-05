@@ -21,7 +21,7 @@ const AttendeeListHeader = ({
   onAdd,
 }: AttendeeListHeaderProps) => {
   return (
-    <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+    <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={4}>
       <Text variant="h2">Attendees List</Text>
       <Box display="flex" gap={2}>
         {attendeeCount > 0 && (

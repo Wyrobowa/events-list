@@ -1,4 +1,5 @@
-import { Box, Input, Select, Text, Button } from 'tharaday';
+import { ChangeEvent } from 'react';
+import { Box, Input, Select, Button } from 'tharaday';
 import { Attendee } from '../../../types';
 
 interface AttendeeListFiltersProps {
@@ -26,7 +27,7 @@ const AttendeeListFilters = ({
 }: AttendeeListFiltersProps) => {
   return (
     <Box
-      mb={4}
+      marginBottom={4}
       display="flex"
       gap={6}
       alignItems="flex-end"
@@ -38,7 +39,7 @@ const AttendeeListFilters = ({
           <Input
             placeholder="Search attendees..."
             value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
             fullWidth
           />
         </Box>
@@ -48,7 +49,7 @@ const AttendeeListFilters = ({
               label="From"
               type="date"
               value={startDate}
-              onChange={(e) => onStartDateChange(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onStartDateChange(e.target.value)}
               fullWidth
             />
           </Box>
@@ -57,7 +58,7 @@ const AttendeeListFilters = ({
               label="To"
               type="date"
               value={endDate}
-              onChange={(e) => onEndDateChange(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onEndDateChange(e.target.value)}
               fullWidth
             />
           </Box>
@@ -67,7 +68,9 @@ const AttendeeListFilters = ({
             label="Sort by"
             name="sortBy"
             value={sortKey}
-            onChange={(e) => onSort(e.target.value as keyof Attendee)}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+              onSort(e.target.value as keyof Attendee)
+            }
             options={[
               { value: 'firstName', label: 'First Name' },
               { value: 'lastName', label: 'Last Name' },
