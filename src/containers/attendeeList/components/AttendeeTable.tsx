@@ -8,19 +8,15 @@ import {
   TableHeader,
   TableRow,
   Box,
-  Button,
   Badge,
   Checkbox,
 } from 'tharaday';
 import { Attendee } from '../../../types';
-import { EditIcon, TrashIcon } from '../../../components/icons/Icons';
 
 interface AttendeeTableProps {
   attendees: Attendee[];
   sortConfig: { key: keyof Attendee; direction: 'asc' | 'desc' } | null;
   onSort: (key: keyof Attendee) => void;
-  onEdit: (slug: string) => void;
-  onDelete: (slug: string) => void;
   selectedSlugs: string[];
   onSelect: (slug: string) => void;
   onSelectAll: () => void;
@@ -32,8 +28,6 @@ const AttendeeTable = memo(
     attendees,
     sortConfig,
     onSort,
-    onEdit,
-    onDelete,
     selectedSlugs,
     onSelect,
     onSelectAll,
@@ -86,7 +80,7 @@ const AttendeeTable = memo(
           </TableRow>
         </TableHeader>
         <TableBody>
-          {attendees.map((attendee: Attendee, index: number) => {
+          {attendees.map((attendee: Attendee) => {
             const ticketType = attendee.ticketType || 'standard';
             return (
               <TableRow
@@ -94,7 +88,7 @@ const AttendeeTable = memo(
                 style={{ cursor: 'pointer' }}
                 onClick={() => attendee.slug && onRowClick(attendee.slug)}
               >
-                <TableCell onClick={(e) => e.stopPropagation()}>
+                <TableCell onClick={(e: React.MouseEvent) => e.stopPropagation()}>
                   <Checkbox
                     checked={attendee.slug ? selectedSlugs.includes(attendee.slug) : false}
                     onChange={() => attendee.slug && onSelect(attendee.slug)}

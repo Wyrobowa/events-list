@@ -114,8 +114,6 @@ const AttendeeList = () => {
           attendees={filteredAndSortedAttendees}
           sortConfig={sortConfig}
           onSort={handleSort}
-          onEdit={handleEdit}
-          onDelete={handleDeleteClick}
           selectedSlugs={selectedSlugs}
           onSelect={handleSelectAttendee}
           onSelectAll={handleSelectAllAttendees}
