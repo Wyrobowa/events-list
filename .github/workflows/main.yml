@@ -27,5 +27,11 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # --run because the `test` script is bare `vitest`, which watches by default.
+      # Vitest does switch to run mode when CI is set, but relying on that is
+      # implicit — an explicit flag cannot hang the runner.
+      - name: Test
+        run: npm test -- --run
+
       - name: Build
         run: npm run build
